@@ -14,8 +14,17 @@ class StoreController extends Controller
     // Get Data
     public function index()
     {
-        $store = Store::latest()->paginate(5);
+        $store = Store::latest()->whereNull('deleted_at')->paginate(5);
         return new StoreResource(true, 'List Data Store', $store);
+    }
+
+    // Get Single Data
+    public function show(Store $store)
+    {
+        if ($store->deleted_at) {
+            return response()->json("Toko tidak ditemukan!", 404);
+        }
+        return new StoreResource(true, 'Data Ditemukan', $store);
     }
 
     // Post Data
@@ -50,11 +59,6 @@ class StoreController extends Controller
         return new StoreResource(true, 'Data Toko Berhasil Ditambahkan', $result);
     }
 
-    // Get Single Data
-    public function show(Store $store)
-    {
-        return new StoreResource(true, 'Data Ditemukan', $store);
-    }
 
     // Update Data
     public function update(Request $req, Store $store)
@@ -69,7 +73,11 @@ class StoreController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        if (!User::where('id', $req->user_id)->exists()) {
+        if ($store->deleted_at) {
+            return response()->json("Toko tidak ditemukan!", 404);
+        }
+
+        if (!User::where('id', $req->user_id)->whereNull('deleted_at')->exists()) {
             return response()->json("Pengguna tidak ditemukan!", 404);
         }
 
@@ -91,7 +99,11 @@ class StoreController extends Controller
     // Delete Data
     public function destroy(Store $store)
     {
-        $store->delete();
+        if ($store->deleted_at) {
+            return response()->json("Toko tidak ditemukan!", 404);
+        }
+        $store->deleted_at = now();
+        $store->save();
         return new StoreResource(true, 'Data Toko Berhasil Dihapus!', null);
     }
 }

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->string('note1')->nullable()->default(null);
             $table->string('note2')->nullable()->default(null);
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }

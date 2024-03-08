@@ -14,13 +14,16 @@ class UserController extends Controller
     // Get Data
     public function index()
     {
-        $user = User::latest()->paginate(5);
+        $user = User::latest()->whereNull('deleted_at')->paginate(5);
         return new UserResource(true, 'List Data User', $user);
     }
 
     // Get Single Data
     public function show(User $user)
     {
+        if ($user->deleted_at) {
+            return response()->json("Pengguna tidak ditemukan!", 404);
+        }
         return new UserResource(true, 'Data Ditemukan', $user);
     }
 
@@ -50,7 +53,7 @@ class UserController extends Controller
             'password' => $hashPassword
         ]);
 
-        return new UserResource(true, 'Data Toko Berhasil Ditambahkan', $result);
+        return new UserResource(true, 'Data Pengguna Berhasil Ditambahkan', $result);
     }
 
     // Update Data
@@ -58,27 +61,21 @@ class UserController extends Controller
     {
         $validator = Validator::make($req->all(), [
             'name' => 'required',
-            'email' => 'required',
-            'password' => 'min:8',
+            'email' => 'required'
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
 
-        if (User::where('email', $req->email)->exists()) {
-            return response()->json("Email telah digunakan!", 404);
-        }
-
-        if($req->password){
-            $hashPassword = Hash::make($req->password);
+        if ($user->deleted_at) {
+            return response()->json("Pengguna tidak ditemukan!", 404);
         }
 
         $user->update([
             'name' => $req->name,
             'email' => $req->email,
-            'type' => $req->type,
-            'password' => $hashPassword
+            'type' => $req->type
         ]);
 
         return new UserResource(true, 'Data Pengguna Berhasil Diubah!', $user);
@@ -88,7 +85,36 @@ class UserController extends Controller
     // Delete Data
     public function destroy(User $user)
     {
-        $user->delete();
-        return new UserResource(true, 'Data Toko Berhasil Dihapus!', null);
+        if ($user->deleted_at) {
+            return response()->json("Pengguna tidak ditemukan!", 404);
+        }
+        $user->deleted_at = now();
+        $user->save();
+        return new UserResource(true, 'Data Pengguna Berhasil Dihapus!', null);
+    }
+
+    // Login
+    public function login(Request $req)
+    {
+        $validator = Validator::make($req->all(), [
+            'email' => 'required',
+            'password' => 'required|min:8'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $existUser = User::where('email', $req->email)->whereNull('deleted_at')->first();
+
+        if ($existUser) {
+            if (Hash::check($req->password, $existUser['password'])) {
+                return new UserResource(true, 'Berhasil Login!', $existUser);
+            } else {
+                return response()->json("Password Salah!", 404);
+            }
+        } else {
+            return response()->json("Email tidak ditemukan!", 404);
+        }
     }
 }

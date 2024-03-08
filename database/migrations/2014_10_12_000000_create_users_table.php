@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->enum('type', ['admin', 'salse', 'spg'])->default('admin');
             $table->rememberToken();
+            $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
     }
