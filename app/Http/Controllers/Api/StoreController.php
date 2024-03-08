@@ -15,7 +15,7 @@ class StoreController extends Controller
     public function index()
     {
         $store = Store::latest()->whereNull('deleted_at')->paginate(5);
-        return new StoreResource(true, 'List Data Store', $store);
+        return new StoreResource(true, 'List Data Toko', $store);
     }
 
     // Get Single Data
