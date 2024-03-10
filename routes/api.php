@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\StoreController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -23,3 +24,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('/stores', StoreController::class);
 Route::apiResource('/users', UserController::class);
 Route::post('/users/login', [UserController::class, 'login'])->name('users.login');
+Route::apiResource('/products', ProductController::class);
