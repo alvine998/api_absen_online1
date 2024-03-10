@@ -33,6 +33,7 @@ class UserController extends Controller
         $validator = Validator::make($req->all(), [
             'name' => 'required',
             'email' => 'required',
+            'nik' => 'required',
             'password' => 'required|min:8',
         ]);
 
@@ -41,13 +42,18 @@ class UserController extends Controller
         }
 
         if (User::where('email', $req->email)->exists()) {
-            return response()->json("Email telah digunakan!", 404);
+            return response()->json("Email telah terdaftar!", 404);
+        }
+
+        if (User::where('nik', $req->nik)->exists()) {
+            return response()->json("NIK telah terdaftar!", 404);
         }
 
         $hashPassword = Hash::make($req->password);
 
         $result = User::create([
             'name' => $req->name,
+            'nik' => $req->nik,
             'email' => $req->email,
             'type' => $req->type,
             'password' => $hashPassword
@@ -61,7 +67,8 @@ class UserController extends Controller
     {
         $validator = Validator::make($req->all(), [
             'name' => 'required',
-            'email' => 'required'
+            'email' => 'required',
+            'nik' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -74,6 +81,7 @@ class UserController extends Controller
 
         $user->update([
             'name' => $req->name,
+            'nik' => $req->nik,
             'email' => $req->email,
             'type' => $req->type
         ]);
@@ -97,7 +105,7 @@ class UserController extends Controller
     public function login(Request $req)
     {
         $validator = Validator::make($req->all(), [
-            'email' => 'required',
+            'nik' => 'required',
             'password' => 'required|min:8'
         ]);
 
@@ -105,7 +113,7 @@ class UserController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $existUser = User::where('email', $req->email)->whereNull('deleted_at')->first();
+        $existUser = User::where('nik', $req->nik)->whereNull('deleted_at')->first();
 
         if ($existUser) {
             if (Hash::check($req->password, $existUser['password'])) {
@@ -114,7 +122,7 @@ class UserController extends Controller
                 return response()->json("Password Salah!", 404);
             }
         } else {
-            return response()->json("Email tidak ditemukan!", 404);
+            return response()->json("NIK tidak ditemukan!", 404);
         }
     }
 }
