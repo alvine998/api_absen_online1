@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AbsentController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\StoreController;
 use App\Http\Controllers\Api\UserController;
@@ -25,3 +26,4 @@ Route::apiResource('/stores', StoreController::class);
 Route::apiResource('/users', UserController::class);
 Route::post('/users/login', [UserController::class, 'login'])->name('users.login');
 Route::apiResource('/products', ProductController::class);
+Route::apiResource('/absents', AbsentController::class);
