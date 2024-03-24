@@ -35,6 +35,7 @@ class UserController extends Controller
             'email' => 'required',
             'nik' => 'required',
             'password' => 'required|min:8',
+            'created_by' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -56,7 +57,8 @@ class UserController extends Controller
             'nik' => $req->nik,
             'email' => $req->email,
             'type' => $req->type,
-            'password' => $hashPassword
+            'password' => $hashPassword,
+            'created_by' => $req->created_by
         ]);
 
         return new UserResource(true, 'Data Pengguna Berhasil Ditambahkan', $result);
@@ -83,7 +85,8 @@ class UserController extends Controller
             'name' => $req->name,
             'nik' => $req->nik,
             'email' => $req->email,
-            'type' => $req->type
+            'type' => $req->type,
+            'created_by' => $req->created_by
         ]);
 
         return new UserResource(true, 'Data Pengguna Berhasil Diubah!', $user);
@@ -119,10 +122,10 @@ class UserController extends Controller
             if (Hash::check($req->password, $existUser['password'])) {
                 return new UserResource(true, 'Berhasil Login!', $existUser);
             } else {
-                return response()->json("Password Salah!", 404);
+                return new UserResource(false, 'Gagal Login, Password Salah!', null);
             }
         } else {
-            return response()->json("NIK tidak ditemukan!", 404);
+            return new UserResource(false, 'Gagal Login!', null);
         }
     }
 }
