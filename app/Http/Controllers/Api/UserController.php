@@ -35,7 +35,9 @@ class UserController extends Controller
             'email' => 'required',
             'nik' => 'required',
             'password' => 'required|min:8',
-            'created_by' => 'required'
+            'user_name' => 'required',
+            'user_type' => 'required',
+            'user_id'=> 'required'
         ]);
 
         if ($validator->fails()) {
@@ -58,7 +60,11 @@ class UserController extends Controller
             'email' => $req->email,
             'type' => $req->type,
             'password' => $hashPassword,
-            'created_by' => $req->created_by
+            'created_by' => json_encode([
+                'user_name' => $req->user_name,
+                'user_type' => $req->user_type,
+                'user_id' => $req->user_id,
+            ])
         ]);
 
         return new UserResource(true, 'Data Pengguna Berhasil Ditambahkan', $result);
@@ -86,7 +92,11 @@ class UserController extends Controller
             'nik' => $req->nik,
             'email' => $req->email,
             'type' => $req->type,
-            'created_by' => $req->created_by
+            'created_by' => json_encode([
+                'user_name' => $req->user_name,
+                'user_type' => $req->user_type,
+                'user_id' => $req->user_id,
+            ])
         ]);
 
         return new UserResource(true, 'Data Pengguna Berhasil Diubah!', $user);
