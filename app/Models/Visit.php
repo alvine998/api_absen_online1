@@ -22,6 +22,7 @@ class Visit extends Model
         'out_time',
         'out_lat',
         'out_long',
-        'user_login'
+        'user_login',
+        'note'
     ];
 }

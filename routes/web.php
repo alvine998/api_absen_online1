@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\AbsentController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VisitorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,3 +24,6 @@ Route::get('/', function () {
 
 Route::resource('/user', UserController::class);
 Route::resource('/store', StoreController::class);
+Route::resource('/visitor', VisitorController::class);
+Route::resource('/absent', AbsentController::class);
+Route::resource('/product', ProductController::class);

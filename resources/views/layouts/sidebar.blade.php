@@ -3,7 +3,7 @@
         <a href="/dashboard" class="text-white font-semibold text-xl">Dashboard</a>
         <a href="/store" class="text-white font-semibold text-xl">Toko</a>
         <a href="/product" class="text-white font-semibold text-xl">Produk</a>
-        <a href="/visitor" class="text-white font-semibold text-xl">Pengunjung</a>
+        <a href="/visitor" class="text-white font-semibold text-xl">Kunjungan</a>
         <a href="/absent" class="text-white font-semibold text-xl">Absen</a>
         <a href="/user" class="text-white font-semibold text-xl">Pengguna</a>
     </div>
