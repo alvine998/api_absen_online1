@@ -18,8 +18,8 @@ return new class extends Migration
             $table->integer('user_id');
             $table->string('name');
             $table->string('code')->unique();
-            $table->string('note1')->nullable()->default(null);
-            $table->string('note2')->nullable()->default(null);
+            $table->string('note1')->nullable();
+            $table->string('note2')->nullable();
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });
