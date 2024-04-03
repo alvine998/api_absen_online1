@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('nik')->unique();
-            $table->enum('type', ['admin', 'sales', 'spg'])->default('admin');
+            $table->enum('type', ['admin', 'sales', 'spg']);
             $table->json('created_by');
             $table->rememberToken();
             $table->timestamp('deleted_at')->nullable();

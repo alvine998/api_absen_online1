@@ -24,7 +24,7 @@
 <body class="antialiased">
     <div class="flex justify-center items-center mt-[150px]">
         <div class="bg-blue-200 lg:w-[350px] lg:h-[250px] rounded-md p-4">
-            <h2 class="text-2xl font-semibold text-center">LOGIN</h2>
+            <h2 class="text-2xl font-semibold text-center">Dasboard</h2>
             @csrf
             <form action="#">
                 <div class="flex flex-col gap-1">
