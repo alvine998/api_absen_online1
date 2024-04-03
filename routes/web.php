@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AbsentController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
@@ -27,3 +28,4 @@ Route::resource('/store', StoreController::class);
 Route::resource('/visitor', VisitorController::class);
 Route::resource('/absent', AbsentController::class);
 Route::resource('/product', ProductController::class);
+Route::resource('/dashboard', DashboardController::class);
