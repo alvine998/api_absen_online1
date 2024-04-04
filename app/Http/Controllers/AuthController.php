@@ -25,6 +25,12 @@ class AuthController extends Controller
    
         $credentials = $req->only('nik', 'password');
         if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            if($user->type !== 'admin'){
+                Auth::logout();
+                return back()->withErrors('Your role is not admin!');
+            }
+            Session::put('user', $user);
             return redirect()->intended('/dashboard')
                         ->withSuccess('You have Successfully loggedin');
         }
