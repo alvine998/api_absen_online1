@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -11,8 +12,10 @@ class UserController extends Controller
     public function index()
     {
         $user = User::latest()->whereNull('deleted_at')->paginate(5);
-
-        return view('user.index', compact('user'));
+        if (Auth::check()) {
+            return view('user.index', compact('user'));
+        }
+        return redirect("/")->withSuccess('Opps! You do not have access');
     }
 
     public function create()
@@ -99,9 +102,9 @@ class UserController extends Controller
     }
 
     public function destroy(User $user)
-    {   
+    {
         $user->deleted_at = now();
         $user->save();
-        return redirect()->route('user.index')->with(['success' => 'Data Berhasil Dihapus!']);   
+        return redirect()->route('user.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }

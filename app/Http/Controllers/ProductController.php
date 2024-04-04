@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -11,7 +12,10 @@ class ProductController extends Controller
     public function index()
     {
         $product = Product::latest()->whereNull('deleted_at')->paginate(5);
-        return view('product.index', compact('product'));
+        if (Auth::check()) {
+            return view('product.index', compact('product'));
+        }
+        return redirect("/")->withSuccess('Opps! You do not have access');
     }
 
     public function create()

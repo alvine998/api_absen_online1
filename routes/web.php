@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AbsentController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StoreController;
@@ -19,13 +20,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::resource('/user', UserController::class);
 Route::resource('/store', StoreController::class);
 Route::resource('/visitor', VisitorController::class);
 Route::resource('/absent', AbsentController::class);
 Route::resource('/product', ProductController::class);
 Route::resource('/dashboard', DashboardController::class);
+Route::resource('/', AuthController::class);
+Route::post('/login', [AuthController::class, 'login'])->name('welcome.login');
+Route::get('/logout', [AuthController::class, 'logout'])->name('welcome.logout');

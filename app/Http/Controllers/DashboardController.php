@@ -8,6 +8,7 @@ use App\Models\Store;
 use App\Models\User;
 use App\Models\Visit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -19,6 +20,10 @@ class DashboardController extends Controller
         $visitor = Visit::whereNull('deleted_at')->count();
         $product = Product::whereNull('deleted_at')->count();
 
-        return view('dashboard.index', compact('store', 'user', 'absent', 'visitor', 'product'));
+        if (Auth::check()) {
+            return view('dashboard.index', compact('store', 'user', 'absent', 'visitor', 'product'));
+        }
+
+        return redirect("/")->withSuccess('Opps! You do not have access');
     }
 }

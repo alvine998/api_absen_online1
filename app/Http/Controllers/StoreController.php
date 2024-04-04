@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Store;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -13,7 +14,10 @@ class StoreController extends Controller
     public function index()
     {
         $store = Store::latest()->whereNull('deleted_at')->paginate(5);
-        return view('store.index', compact('store'));
+        if (Auth::check()) {
+            return view('store.index', compact('store'));
+        }
+        return redirect("/")->withSuccess('Opps! You do not have access');
     }
 
     public function create()
