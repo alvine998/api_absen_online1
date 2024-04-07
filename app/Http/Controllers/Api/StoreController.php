@@ -12,9 +12,21 @@ use Illuminate\Support\Facades\Validator;
 class StoreController extends Controller
 {
     // Get Data
-    public function index()
+    public function index(Request $req)
     {
-        $store = Store::latest()->whereNull('deleted_at')->paginate(5);
+        $query = Store::query();
+        if ($req->get('search')) {
+            $query->latest()->where('name', 'like', '%' . $req->get('search') . '%');
+        }
+        if ($req->get('user_id')) {
+           $query->latest()->where('user_id', '=' ,$req->get('user_id'));
+        }
+        $store = $query->latest()->whereNull('deleted_at')->paginate(5);
+
+        if (!$req->query()) {
+            $store = Store::latest()->whereNull('deleted_at')->paginate(5);
+        }
+
         return new StoreResource(true, 'List Data Toko', $store);
     }
 

@@ -12,9 +12,20 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
     // Get Data
-    public function index()
+    public function index(Request $req)
     {
-        $user = User::latest()->whereNull('deleted_at')->paginate(5);
+        $query = User::query();
+        if ($req->get('search')) {
+            $query->latest()->where('name', 'like', '%' . $req->get('search') . '%')->where('email', 'like', '%' . $req->get('search') . '%')->where('nik', 'like', '%' . $req->get('search') . '%');
+        }
+        if ($req->get('type')) {
+            $query->latest()->where('type', '=' ,$req->get('type'));
+         }
+        $user = $query->latest()->whereNull('deleted_at')->paginate(5);;
+
+        if (!$req->query()) {
+            $user = User::latest()->whereNull('deleted_at')->paginate(5);
+        }
         return new UserResource(true, 'List Data User', $user);
     }
 
@@ -37,7 +48,7 @@ class UserController extends Controller
             'password' => 'required|min:8',
             'user_name' => 'required',
             'user_type' => 'required',
-            'user_id'=> 'required'
+            'user_id' => 'required'
         ]);
 
         if ($validator->fails()) {

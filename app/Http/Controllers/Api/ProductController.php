@@ -11,9 +11,17 @@ use Illuminate\Support\Facades\Validator;
 class ProductController extends Controller
 {
     // Get Data
-    public function index()
+    public function index(Request $req)
     {
-        $product = Product::latest()->whereNull('deleted_at')->paginate(5);
+        $query = Product::query();
+        if ($req->get('search')) {
+            $query->latest()->where('code', 'like', '%' . $req->get('search') . '%')->orWhere('name', 'like', '%' . $req->get('search') . '%');
+        }
+        $product = $query->latest()->where('deleted_at', '=', 'null')->paginate(5);
+
+        if (!$req->query()) {
+            $product = Product::latest()->whereNull('deleted_at')->paginate(5);
+        }
         return new ProductResource(true, 'List Data Produk', $product);
     }
 
