@@ -82,6 +82,7 @@ class VisitController extends Controller
         $result = Visit::create([
             'store_id' => $req->store_id,
             'store_name' => $req->store_name,
+            'store_type' => $req->store_type,
             'image' => $image->hashName(),
             'in_date' => $req->in_date,
             'in_time' => $req->in_time,
@@ -103,11 +104,12 @@ class VisitController extends Controller
         $validator = Validator::make($req->all(), [
             'store_id' => 'required',
             'store_name' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'type' => 'required',
-            'latt' => 'required',
-            'long' => 'required',
+            'store_type' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+            'in_date' => 'required',
+            'in_time' => 'required',
+            'in_lat' => 'required',
+            'in_long' => 'required',
             'user_login' => 'required'
         ]);
 
@@ -132,6 +134,7 @@ class VisitController extends Controller
             $visit->update([
                 'store_id' => $req->store_id,
                 'store_name' => $req->store_name,
+                'store_type' => $req->store_type,
                 'image' => $image->hashName(),
                 'in_date' => $req->in_date,
                 'in_time' => $req->in_time,
@@ -149,6 +152,7 @@ class VisitController extends Controller
             $visit->update([
                 'store_id' => $req->store_id,
                 'store_name' => $req->store_name,
+                'store_type' => $req->store_type,
                 'in_date' => $req->in_date,
                 'in_time' => $req->in_time,
                 'in_lat' => $req->in_lat,
