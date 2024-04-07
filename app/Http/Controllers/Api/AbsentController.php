@@ -6,15 +6,44 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\GeneralResource;
 use App\Models\Absent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class AbsentController extends Controller
 {
     // Get Data
-    public function index()
+    public function index(Request $req)
     {
-        $absent = Absent::latest()->whereNull('deleted_at')->paginate(5);
+        $search = $req->get('search');
+        $store_id = $req->get('store_id');
+        $type = $req->get('type');
+        $date_start = $req->get('date_start');
+        $date_end = $req->get('date_end');
+
+        $query = Absent::query()->whereNull('deleted_at');
+        if ($search) {
+            $query->where(function ($q) use ($search){
+                $q->where('store_name', 'like', '%' . $search . '%');
+            });
+        }
+        if ($store_id) {
+            $query->latest()->where('store_id', '=', $store_id);
+        }
+        if ($type) {
+            $query->latest()->where('type', '=', $type);
+        }
+        if($date_start && $date_end){
+            $dateStart = Carbon::parse($date_start);
+            $dateEnd = Carbon::parse($date_end)->endOfDay();
+
+            $query->latest()->whereBetween('date', [$dateStart, $dateEnd]);
+        }
+        $absent = $query->paginate(5);
+
+        if (!$req->query()) {
+            $absent = Absent::latest()->whereNull('deleted_at')->paginate(5);
+        }
         return new GeneralResource(true, 'List Data Absensi', $absent);
     }
 

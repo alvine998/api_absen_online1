@@ -14,14 +14,17 @@ class StoreController extends Controller
     // Get Data
     public function index(Request $req)
     {
-        $query = Store::query();
-        if ($req->get('search')) {
-            $query->latest()->where('name', 'like', '%' . $req->get('search') . '%');
+        $search = $req->get('search');
+        $query = Store::query()->whereNull('deleted_at');
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', '%' . $search . '%');
+            });
         }
         if ($req->get('user_id')) {
-           $query->latest()->where('user_id', '=' ,$req->get('user_id'));
+            $query->latest()->where('user_id', '=', $req->get('user_id'));
         }
-        $store = $query->latest()->whereNull('deleted_at')->paginate(5);
+        $store = $query->paginate(5);
 
         if (!$req->query()) {
             $store = Store::latest()->whereNull('deleted_at')->paginate(5);

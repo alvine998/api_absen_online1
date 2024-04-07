@@ -13,11 +13,15 @@ class ProductController extends Controller
     // Get Data
     public function index(Request $req)
     {
-        $query = Product::query();
-        if ($req->get('search')) {
-            $query->latest()->where('code', 'like', '%' . $req->get('search') . '%')->orWhere('name', 'like', '%' . $req->get('search') . '%');
+        $search = $req->get('search');
+        $query = Product::query()->whereNull('deleted_at');
+        if ($search) {
+            $query->where(function ($q) use ($search){
+                $q->where('name', 'like', '%' . $search . '%')
+                ->orWhere('code', 'like', '%' . $search . '%');
+            });
         }
-        $product = $query->latest()->where('deleted_at', '=', 'null')->paginate(5);
+        $product = $query->paginate(5);
 
         if (!$req->query()) {
             $product = Product::latest()->whereNull('deleted_at')->paginate(5);

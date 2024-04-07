@@ -14,14 +14,19 @@ class UserController extends Controller
     // Get Data
     public function index(Request $req)
     {
-        $query = User::query();
-        if ($req->get('search')) {
-            $query->latest()->where('name', 'like', '%' . $req->get('search') . '%')->where('email', 'like', '%' . $req->get('search') . '%')->where('nik', 'like', '%' . $req->get('search') . '%');
+        $search = $req->get('search');
+        $query = User::query()->whereNull('deleted_at');
+        if ($search) {
+            $query->where(function ($q) use ($search){
+                $q->where('name', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%')
+                ->orWhere('nik', 'like', '%' . $search . '%');
+            });
         }
         if ($req->get('type')) {
             $query->latest()->where('type', '=' ,$req->get('type'));
          }
-        $user = $query->latest()->whereNull('deleted_at')->paginate(5);;
+        $user = $query->paginate(5);
 
         if (!$req->query()) {
             $user = User::latest()->whereNull('deleted_at')->paginate(5);

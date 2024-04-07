@@ -23,11 +23,11 @@ return new class extends Migration
             $table->date('in_date');
             $table->time('in_time');
             $table->string('in_lat');
-            $table->string('in_long');
-            $table->date('out_date');
-            $table->time('out_time');
-            $table->string('out_lat');
-            $table->string('out_long');
+            $table->string('in_long')->nullable();
+            $table->date('out_date')->nullable();
+            $table->time('out_time')->nullable();
+            $table->string('out_lat')->nullable();
+            $table->string('out_long')->nullable();
             $table->json('user_login');
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();

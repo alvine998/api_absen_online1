@@ -6,15 +6,45 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\GeneralResource;
 use App\Models\Visit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class VisitController extends Controller
 {
     // Get Data
-    public function index()
+    public function index(Request $req)
     {
-        $visit = Visit::latest()->whereNull('deleted_at')->paginate(5);
+        $search = $req->get('search');
+        $store_id = $req->get('store_id');
+        $store_type = $req->get('store_type');
+        $date_start = $req->get('date_start');
+        $date_end = $req->get('date_end');
+
+        $query = Visit::query()->whereNull('deleted_at');
+        if ($search) {
+            $query->where(function ($q) use ($search){
+                $q->where('store_name', 'like', '%' . $search . '%');
+            });
+        }
+        if ($store_id) {
+            $query->latest()->where('store_id', '=', $store_id);
+        }
+        if ($store_type) {
+            $query->latest()->where('store_type', '=', $store_type);
+        }
+        if($date_start && $date_end){
+            $dateStart = Carbon::parse($date_start);
+            $dateEnd = Carbon::parse($date_end)->endOfDay();
+
+            $query->latest()->whereBetween('created_at', [$dateStart, $dateEnd]);
+        }
+        $visit = $query->paginate(5);
+
+        if (!$req->query()) {
+            $visit = Visit::latest()->whereNull('deleted_at')->paginate(5);
+        }
+
         return new GeneralResource(true, 'List Data Pengunjung', $visit);
     }
 
