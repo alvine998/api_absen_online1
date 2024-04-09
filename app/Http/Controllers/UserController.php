@@ -43,6 +43,7 @@ class UserController extends Controller
             'email' => $req->email,
             'type' => $req->type,
             'password' => $hashPassword,
+            'role' => $req->role,
             'created_by' => json_encode([
                 'user_name' => $req->user_name,
                 'user_type' => $req->user_type,
@@ -79,6 +80,7 @@ class UserController extends Controller
                 'email' => $req->email,
                 'type' => $req->type,
                 'password' => $hashPassword,
+                'role' => $req->role,
                 'created_by' => json_encode([
                     'user_name' => $req->user_name,
                     'user_type' => $req->user_type,
@@ -91,6 +93,7 @@ class UserController extends Controller
                 'nik' => $req->nik,
                 'email' => $req->email,
                 'type' => $req->type,
+                'role' => $req->role,
                 'created_by' => json_encode([
                     'user_name' => $req->user_name,
                     'user_type' => $req->user_type,

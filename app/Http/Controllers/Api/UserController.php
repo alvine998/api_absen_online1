@@ -17,15 +17,18 @@ class UserController extends Controller
         $search = $req->get('search');
         $query = User::query()->whereNull('deleted_at');
         if ($search) {
-            $query->where(function ($q) use ($search){
+            $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', '%' . $search . '%')
-                ->orWhere('email', 'like', '%' . $search . '%')
-                ->orWhere('nik', 'like', '%' . $search . '%');
+                    ->orWhere('email', 'like', '%' . $search . '%')
+                    ->orWhere('nik', 'like', '%' . $search . '%');
             });
         }
         if ($req->get('type')) {
-            $query->latest()->where('type', '=' ,$req->get('type'));
-         }
+            $query->latest()->where('type', '=', $req->get('type'));
+        }
+        if ($req->get('isnotspv') == '1') {
+            $query->latest()->where('role', '=', null);
+        }
         $user = $query->paginate(5);
 
         if (!$req->query()) {
@@ -75,6 +78,7 @@ class UserController extends Controller
             'nik' => $req->nik,
             'email' => $req->email,
             'type' => $req->type,
+            'role' => $req->role,
             'password' => $hashPassword,
             'created_by' => json_encode([
                 'user_name' => $req->user_name,
@@ -108,6 +112,7 @@ class UserController extends Controller
             'nik' => $req->nik,
             'email' => $req->email,
             'type' => $req->type,
+            'role' => $req->role,
             'created_by' => json_encode([
                 'user_name' => $req->user_name,
                 'user_type' => $req->user_type,
@@ -142,11 +147,19 @@ class UserController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $existUser = User::where('nik', $req->nik)->whereNull('deleted_at')->first();
+        $existUser = User::where('nik', '=', $req->nik)->whereNull('deleted_at')->first();
 
         if ($existUser) {
             if (Hash::check($req->password, $existUser['password'])) {
-                return new UserResource(true, 'Berhasil Login!', $existUser);
+                if($existUser['type'] == "spg"){
+                    if($existUser['role'] == "supervisor"){
+                        return new UserResource(true, 'Berhasil Login!', $existUser);
+                    } else {
+                        return new UserResource(false, 'Anda bukan supervisor!', null);
+                    }
+                } else {
+                    return new UserResource(true, 'Berhasil Login!', $existUser);
+                }
             } else {
                 return new UserResource(false, 'Gagal Login, Password Salah!', null);
             }

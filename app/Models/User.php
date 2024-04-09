@@ -23,7 +23,8 @@ class User extends Authenticatable
         'password',
         'nik',
         'created_by',
-        'type'
+        'type',
+        'role'
     ];
 
     /**

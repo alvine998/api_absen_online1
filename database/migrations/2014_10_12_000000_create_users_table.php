@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('nik')->unique();
             $table->enum('type', ['admin', 'sales', 'spg']);
+            $table->enum('role', ['supervisor'])->nullable();
             $table->json('created_by');
             $table->rememberToken();
             $table->timestamp('deleted_at')->nullable();
