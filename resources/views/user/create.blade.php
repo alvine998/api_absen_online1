@@ -28,6 +28,30 @@
                         <option value="admin">Admin</option>
                     </select>
                 </div>
+                <div id="radioRole" class="hidden my-4">
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="role" id="role" value="supervisor">
+                        <span class="ml-2">Supervisor</span>
+                    </label>
+                    <label class="inline-flex items-center ml-6">
+                        <input type="radio" name="role" id="role" value="">
+                        <span class="ml-2">Not Supervisor</span>
+                    </label>
+                </div>
+
+                <script>
+                    document.getElementById('type').addEventListener('change', function() {
+                        var selected = this.value;
+                        var radioSelect = document.getElementById('radioRole');
+
+                        if(selected !== "spg"){
+                            radioSelect.classList.add('hidden')
+                        } else {
+                            radioSelect.classList.remove('hidden')
+                        }
+                    })
+                </script>
+
                 <div class="flex flex-col gap-1 mt-2">
                     <label for="password">Password</label>
                     <input id="password" name="password" value="{{old('password')}}" type="password" required placeholder="Masukkan Password" class="w-full p-1 pl-2 rounded border border-gray-300" />
