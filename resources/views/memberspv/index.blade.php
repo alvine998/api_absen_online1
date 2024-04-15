@@ -12,38 +12,30 @@
 @endif
 
 <div class="mt-[50px] px-10">
-    <h2 class="text-2xl font-bold">Pengguna</h2>
+    <h2 class="text-2xl font-bold">Supervisor</h2>
     <div class="bg-white shadow w-full rounded-md p-4 mt-2">
-        <a href="{{route('user.create')}}" class="w-auto p-2 bg-blue-500 rounded text-white">Tambah Data</a>
+        <a href="{{route('memberspv.create')}}" class="w-auto p-2 bg-blue-500 rounded text-white">Tambah Data</a>
         <div class="overflow-x-auto mt-5">
             <table class="w-full table-auto pb-2">
                 <thead>
                     <tr>
-                        <th class="border border-black bg-gray-300 px-4 py-2">Nama</th>
-                        <th class="border border-black bg-gray-300 px-4 py-2">NIK</th>
-                        <th class="border border-black bg-gray-300 px-4 py-2">Email</th>
-                        <th class="border border-black bg-gray-300 px-4 py-2">Peran</th>
+                        <th class="border border-black bg-gray-300 px-4 py-2">Supervisor</th>
+                        <th class="border border-black bg-gray-300 px-4 py-2">Anggota</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($user as $users)
+                    @forelse ($supervisor as $members)
                     <tr>
-                        <td class="border px-4 py-2 border-black">
-                            {{$users->name}}
+                        <td class="border px-4 py-2 border-black uppercase text-center">
+                            {{$members->spv_name}}
                         </td>
-                        <td class="border px-4 py-2 border-black">
-                            {{$users->nik}}
-                        </td>
-                        <td class="border px-4 py-2 border-black">
-                            {{$users->email}}
-                        </td>
-                        <td class="border px-4 py-2 border-black uppercase">
-                            {{$users->type}} {{$users->role ? '- ' . $users->role : '- Anggota'}}
+                        <td class="border px-4 py-2 border-black uppercase text-center">
+                            {{$members->user_name}}
                         </td>
                         <td class="border px-4 py-2 border-black text-center flex gap-5 justify-center items-center">
-                            <a href="{{route('user.edit', $users)}}" class="text-green-700 hover:text-green-600 text-3xl"><i class="fas fa-pen-square"></i></a>
-                            <form onsubmit="return confirm('Apakah anda yakin ingin menghapus data ini?')" action="{{route('user.destroy', $users->id)}}" method="POST">
+                            <!-- <a href="{{route('user.edit', $members)}}" class="text-green-700 hover:text-green-600 text-3xl"><i class="fas fa-pen-square"></i></a> -->
+                            <form onsubmit="return confirm('Apakah anda yakin ingin menghapus data ini?')" action="{{route('memberspv.destroy', $members->id)}}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-red-700 hover:text-red-700 text-3xl"><i class="fas fa-trash"></i></button>
@@ -59,7 +51,7 @@
             </table>
         </div>
 
-        {{$user->links()}}
+        {{$supervisor->links()}}
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

@@ -44,7 +44,7 @@
                         var selected = this.value;
                         var radioSelect = document.getElementById('radioRole');
 
-                        if(selected !== "spg"){
+                        if (selected !== "spg") {
                             radioSelect.classList.add('hidden')
                         } else {
                             radioSelect.classList.remove('hidden')
@@ -62,7 +62,7 @@
             </div>
 
             <div class="mt-5 flex justify-between items-center gap-2">
-                <button type="button" class="w-full p-1 rounded bg-red-500 text-white hover:bg-red-600 duration-200">Batal</button>
+                <a href="/user" class="w-full p-1 rounded text-center bg-red-500 text-white hover:bg-red-600 duration-200">Batal</a>
                 <button type="submit" class="w-full p-1 rounded bg-blue-500 text-white hover:bg-blue-600 duration-200">Simpan</button>
             </div>
         </form>
