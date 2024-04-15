@@ -29,6 +29,9 @@ class UserController extends Controller
         if ($req->get('isnotspv') == '1') {
             $query->latest()->where('role', '=', null);
         }
+        if ($req->get('isnotspv') == '0') {
+            $query->latest()->where('role', '=', 'supervisor');
+        }
         $user = $query->paginate(5);
 
         if (!$req->query()) {

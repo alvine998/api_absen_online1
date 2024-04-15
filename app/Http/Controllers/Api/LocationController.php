@@ -49,9 +49,7 @@ class LocationController extends Controller
              return response()->json($validator->errors(), 400);
          }
 
-         $existUser = User::where('id', $request->user_id)->first();
-         echo "name: " . $existUser->name;
- 
+         $existUser = User::where('id', $request->user_id)->first(); 
          if (!$existUser) {
              return response()->json("Pengguna tidak ditemukan!", 404);
          }
