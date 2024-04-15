@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\AbsentController;
+use App\Http\Controllers\Api\LocationController;
+use App\Http\Controllers\api\MemberSpvController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\StoreController;
 use App\Http\Controllers\Api\UserController;
@@ -29,3 +31,5 @@ Route::post('/users/login', [UserController::class, 'login'])->name('users.login
 Route::apiResource('/products', ProductController::class);
 Route::apiResource('/absents', AbsentController::class);
 Route::apiResource('/visits', VisitController::class);
+Route::apiResource('/memberspv', MemberSpvController::class);
+Route::apiResource('/locations', LocationController::class);
