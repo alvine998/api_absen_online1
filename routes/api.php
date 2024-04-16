@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AbsentController;
+use App\Http\Controllers\Api\IntervalController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\api\MemberSpvController;
 use App\Http\Controllers\Api\ProductController;
@@ -33,3 +34,4 @@ Route::apiResource('/absents', AbsentController::class);
 Route::apiResource('/visits', VisitController::class);
 Route::apiResource('/memberspv', MemberSpvController::class);
 Route::apiResource('/locations', LocationController::class);
+Route::apiResource('/intervals', IntervalController::class);
