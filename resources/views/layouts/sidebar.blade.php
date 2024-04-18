@@ -9,6 +9,7 @@
         <a href="/stock" class="text-white font-semibold text-xl">Stok</a>
         <a href="/location" class="text-white font-semibold text-xl">Lokasi</a>
         <a href="/interval" class="text-white font-semibold text-xl">Set Interval</a>
+        <a href="/storelocation" class="text-white font-semibold text-xl">Lokasi Toko</a>
         <a href="/user" class="text-white font-semibold text-xl">Pengguna</a>
     </div>
 </div>

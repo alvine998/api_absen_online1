@@ -22,7 +22,7 @@ class StoreController extends Controller
 
     public function create()
     {
-        $user = User::latest()->whereNull('deleted_at')->paginate(999);
+        $user = User::latest()->where([['deleted_at', '=', null], ['type', '=', 'spg'], ['role', '=', 'supervisor']])->paginate(999);
 
         return view('store.create', compact('user'));
     }
@@ -52,7 +52,7 @@ class StoreController extends Controller
 
     public function edit(Store $store)
     {
-        $user = User::latest()->whereNull('deleted_at')->paginate(999);
+        $user = User::latest()->where([['deleted_at', '=', null], ['type', '=', 'spg'], ['role', '=', 'supervisor']])->paginate(999);
         return view("store.edit", compact('store', 'user'));
     }
 

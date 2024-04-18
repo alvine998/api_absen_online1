@@ -44,7 +44,7 @@
                     </tr>
                     @empty
                     <div class="bg-red-200 w-full p-2 my-2 rounded-md">
-                        <p class="text-red-500">Data Pengguna Tidak Tersedia</p>
+                        <p class="text-red-500">Data Supervisor Tidak Tersedia</p>
                     </div>
                     @endforelse
                 </tbody>

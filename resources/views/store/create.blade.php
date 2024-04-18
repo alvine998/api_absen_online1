@@ -16,9 +16,9 @@
                     <input id="name" name="name" type="text" value="{{old('name')}}" required placeholder="Masukkan Nama Toko" class="w-full p-1 pl-2 rounded border border-gray-300" />
                 </div>
                 <div class="flex flex-col gap-1 mt-2">
-                    <label for="user_id">Pemilik</label>
+                    <label for="user_id">Supervisor</label>
                     <select name="user_id" class="w-full p-1 border border-gray-300" id="user_id">
-                        <option value="">Pilih Pemilik</option>
+                        <option value="">Pilih Supervisor</option>
                         @foreach ($user as $users)
                         <option value="{{$users->id}}">{{$users->name}}</option>
                         @endforeach

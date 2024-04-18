@@ -48,7 +48,7 @@
                     </tr>
                     @empty
                     <div class="bg-red-200 w-full p-2 rounded-md my-2">
-                        <p class="text-red-500">Data Produk Tidak Tersedia</p>
+                        <p class="text-red-500">Data Lokasi Tidak Tersedia</p>
                     </div>
                     @endforelse
                 </tbody>
