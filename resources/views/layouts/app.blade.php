@@ -23,11 +23,11 @@
     </style>
 </head>
 
-<body class="overflow-hidden">
+<body class="overflow-y-hidden">
     @include('layouts.topbar')
     <div class="flex">
         @include('layouts.sidebar')
-        <div class="w-full">
+        <div class="w-full h-[90vh] overflow-y-auto">
             @yield('content')
         </div>
     </div>
