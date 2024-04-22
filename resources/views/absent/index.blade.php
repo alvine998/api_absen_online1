@@ -53,8 +53,8 @@
                             </p>
                         </td>
                         <td class="border px-4 py-2 border-black flex items-center justify-center">
-                        <!-- {{Storage::url('public/storage').$absents->image}} -->
-                            <img src="{{Storage::url('public/storage/').$absents->image}}" alt="img-absent" class="w-[150px] h-[150px]">
+                            <!-- {{Storage::url('public/app/public/storage').$absents->image}} -->
+                            <img src="{{Storage::url('public/app/public/storage/').$absents->image}}" alt="img-absent" class="w-[150px] h-[150px]">
                         </td>
                     </tr>
                     @empty
