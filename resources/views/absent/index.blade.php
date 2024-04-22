@@ -53,7 +53,7 @@
                             </p>
                         </td>
                         <td class="border px-4 py-2 border-black">
-                            <img src="{{$absents->image}}" alt="img-absent">
+                            <img src="{{Storage::url('public/storage/storage').$absents->image}}" alt="img-absent">
                         </td>
                     </tr>
                     @empty
