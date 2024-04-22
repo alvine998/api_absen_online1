@@ -76,7 +76,7 @@ class AbsentController extends Controller
         }
 
         $image = $req->file('image');
-        $image->storeAs('public', $image->hashName());
+        $image->storeAs('public/storage', $image->hashName());
 
         $result = Absent::create([
             'store_id' => $req->store_id,
