@@ -21,6 +21,7 @@ class AbsentController extends Controller
         $type = $req->get('type');
         $date_start = $req->get('date_start');
         $date_end = $req->get('date_end');
+        $spg_id = $req->get('spg_id');
 
         $query = Absent::query()->whereNull('deleted_at');
         if ($search) {
@@ -33,6 +34,9 @@ class AbsentController extends Controller
         }
         if ($type) {
             $query->latest()->where('type', '=', $type);
+        }
+        if ($spg_id) {
+            $query->latest()->where('spg_id', '=', $spg_id);
         }
         if ($date_start && $date_end) {
             $dateStart = Carbon::parse($date_start);
