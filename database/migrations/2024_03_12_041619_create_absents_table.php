@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->integer('store_id');
             $table->string('store_name');
+            $table->integer('spg_id');
+            $table->string('spg_name');
             $table->date('date');
             $table->time('time');
             $table->enum('type', ['in', 'out']);

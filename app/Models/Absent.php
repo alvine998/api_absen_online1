@@ -12,6 +12,8 @@ class Absent extends Model
     protected $fillable = [
         'store_id',
         'store_name',
+        'spg_id',
+        'spg_name',
         'date',
         'time',
         'type',

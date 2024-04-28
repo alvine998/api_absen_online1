@@ -22,6 +22,7 @@
                         <th class="border border-black bg-gray-300 px-4 py-2">Waktu</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Latitude</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Longitude</th>
+                        <th class="border border-black bg-gray-300 px-4 py-2">Foto</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,6 +48,9 @@
                                 Masuk: {{$visitors->in_long}}<br />
                                 Pulang: {{$visitors->out_long}}
                             </p>
+                        </td>
+                        <td class="border px-4 py-2 border-black flex items-center justify-center">
+                            <img src="{{Storage::url('storage/').$absents->image}}" alt="img-absent" class="w-[150px] h-[150px]">
                         </td>
                     </tr>
                     @empty

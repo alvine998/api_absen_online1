@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\GeneralResource;
 use App\Models\Absent;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -23,7 +24,7 @@ class AbsentController extends Controller
 
         $query = Absent::query()->whereNull('deleted_at');
         if ($search) {
-            $query->where(function ($q) use ($search){
+            $query->where(function ($q) use ($search) {
                 $q->where('store_name', 'like', '%' . $search . '%');
             });
         }
@@ -33,7 +34,7 @@ class AbsentController extends Controller
         if ($type) {
             $query->latest()->where('type', '=', $type);
         }
-        if($date_start && $date_end){
+        if ($date_start && $date_end) {
             $dateStart = Carbon::parse($date_start);
             $dateEnd = Carbon::parse($date_end)->endOfDay();
 
@@ -62,6 +63,8 @@ class AbsentController extends Controller
         $validator = Validator::make($req->all(), [
             'store_id' => 'required',
             'store_name' => 'required',
+            'spg_id' => 'required',
+            'spg_name' => 'required',
             'date' => 'required',
             'time' => 'required',
             'type' => 'required',
@@ -75,12 +78,26 @@ class AbsentController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
+        $existSPG = User::where('id', $req->spg_id)->first();
+        if (!$existSPG) {
+            return response()->json("SPG tidak ditemukan!", 404);
+        }
+        $existAbsent = Absent::where('spg_id', '=', $req->spg_id)->first();
+        if ($existAbsent) {
+            if ($existAbsent->date == $req->date) {
+                return response()->json("Tanggal tidak boleh sama!", 404);
+            }
+        }
+
+
         $image = $req->file('image');
         $image->storeAs('public/storage', $image->hashName());
 
         $result = Absent::create([
             'store_id' => $req->store_id,
             'store_name' => $req->store_name,
+            'spg_id' => $req->spg_id,
+            'spg_name' => $req->spg_name,
             'date' => $req->date,
             'time' => $req->time,
             'type' => $req->type,
@@ -99,6 +116,8 @@ class AbsentController extends Controller
         $validator = Validator::make($req->all(), [
             'store_id' => 'required',
             'store_name' => 'required',
+            'spg_id' => 'required',
+            'spg_name' => 'required',
             'date' => 'required',
             'time' => 'required',
             'type' => 'required',
@@ -128,6 +147,8 @@ class AbsentController extends Controller
             $absent->update([
                 'store_id' => $req->store_id,
                 'store_name' => $req->store_name,
+                'spg_id' => $req->spg_id,
+                'spg_name' => $req->spg_name,
                 'date' => $req->date,
                 'time' => $req->time,
                 'type' => $req->type,
@@ -142,6 +163,8 @@ class AbsentController extends Controller
             $absent->update([
                 'store_id' => $req->store_id,
                 'store_name' => $req->store_name,
+                'spg_id' => $req->spg_id,
+                'spg_name' => $req->spg_name,
                 'date' => $req->date,
                 'time' => $req->time,
                 'type' => $req->type,
@@ -162,7 +185,7 @@ class AbsentController extends Controller
         }
         $absent->deleted_at = now();
         $absent->save();
-        Storage::delete('public/storage/'.$absent->image);  
+        Storage::delete('public/storage/' . $absent->image);
         return new GeneralResource(true, 'Data Absensi Berhasil Dihapus!', null);
     }
 }
