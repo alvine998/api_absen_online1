@@ -86,9 +86,9 @@ class AbsentController extends Controller
         if (!$existSPG) {
             return response()->json("SPG tidak ditemukan!", 404);
         }
-        $existAbsent = Absent::where('spg_id', '=', $req->spg_id)->first();
+        $existAbsent = Absent::latest()->where('spg_id', '=', $req->spg_id)->first();
         if ($existAbsent) {
-            if ($existAbsent->date == $req->date) {
+            if (($existAbsent->date == $req->date) && ($existAbsent->type == $req->type)) {
                 return response()->json("Tanggal tidak boleh sama!", 404);
             }
         }

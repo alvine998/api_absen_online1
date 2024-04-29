@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use App\Models\Store;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -37,7 +38,7 @@ class UserController extends Controller
         if (!$req->query()) {
             $user = User::latest()->whereNull('deleted_at')->paginate(5);
         }
-        return new UserResource(true, 'List Data User', $user);
+        return new UserResource(true, 'List Data User', $user, null);
     }
 
     // Get Single Data
@@ -46,7 +47,7 @@ class UserController extends Controller
         if ($user->deleted_at) {
             return response()->json("Pengguna tidak ditemukan!", 404);
         }
-        return new UserResource(true, 'Data Ditemukan', $user);
+        return new UserResource(true, 'Data Ditemukan', $user, null);
     }
 
     // Post Data
@@ -90,7 +91,7 @@ class UserController extends Controller
             ])
         ]);
 
-        return new UserResource(true, 'Data Pengguna Berhasil Ditambahkan', $result);
+        return new UserResource(true, 'Data Pengguna Berhasil Ditambahkan', $result, null);
     }
 
     // Update Data
@@ -123,7 +124,7 @@ class UserController extends Controller
             ])
         ]);
 
-        return new UserResource(true, 'Data Pengguna Berhasil Diubah!', $user);
+        return new UserResource(true, 'Data Pengguna Berhasil Diubah!', $user, null);
     }
 
 
@@ -135,7 +136,7 @@ class UserController extends Controller
         }
         $user->deleted_at = now();
         $user->save();
-        return new UserResource(true, 'Data Pengguna Berhasil Dihapus!', null);
+        return new UserResource(true, 'Data Pengguna Berhasil Dihapus!', null, null);
     }
 
     // Login
@@ -151,23 +152,24 @@ class UserController extends Controller
         }
 
         $existUser = User::where('nik', '=', $req->nik)->whereNull('deleted_at')->first();
+        $existStore = Store::where('user_id', '=', $existUser->id)->whereNull('deleted_at')->first();
 
         if ($existUser) {
             if (Hash::check($req->password, $existUser['password'])) {
-                if($existUser['type'] == "spg"){
-                    if($existUser['role'] == "supervisor"){
-                        return new UserResource(true, 'Berhasil Login!', $existUser);
+                if ($existUser['type'] == "spg") {
+                    if ($existUser['role'] == "supervisor") {
+                        return new UserResource(true, 'Berhasil Login!', $existUser, $existStore);
                     } else {
-                        return new UserResource(false, 'Anda bukan supervisor!', null);
+                        return new UserResource(false, 'Anda bukan supervisor!', null, null);
                     }
                 } else {
-                    return new UserResource(true, 'Berhasil Login!', $existUser);
+                    return new UserResource(true, 'Berhasil Login!', $existUser, $existStore);
                 }
             } else {
-                return new UserResource(false, 'Gagal Login, Password Salah!', null);
+                return new UserResource(false, 'Gagal Login, Password Salah!', null, null);
             }
         } else {
-            return new UserResource(false, 'Gagal Login!', null);
+            return new UserResource(false, 'Gagal Login!', null, null);
         }
     }
 }

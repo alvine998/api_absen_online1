@@ -8,12 +8,14 @@ class UserResource extends JsonResource
 {
     public $status;
     public $message;
+    public $store;
 
-    public function __construct($status, $message, $resource)
+    public function __construct($status, $message, $resource, $store)
     {
         parent::__construct($resource);
         $this->status = $status;
         $this->message = $message;
+        $this->store = $store;
     }
     /**
      * Transform the resource into an array.
@@ -26,7 +28,8 @@ class UserResource extends JsonResource
         return [
             'success' => $this->status,
             'message' => $this->message,
-            'data' => $this->resource
+            'data' => $this->resource,
+            'store' => $this->store
         ];
     }
 }
