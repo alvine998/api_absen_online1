@@ -8,6 +8,7 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MemberSpv;
 use App\Http\Controllers\MemberSpvController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\StoreLocationController;
 use App\Http\Controllers\UserController;
@@ -35,6 +36,8 @@ Route::resource('/memberspv', MemberSpvController::class);
 Route::resource('/interval', IntervalController::class);
 Route::resource('/location', LocationController::class);
 Route::resource('/storelocation', StoreLocationController::class);
+Route::resource('/stock', StockController::class);
+
 Route::resource('/', AuthController::class);
 Route::post('/login', [AuthController::class, 'login'])->name('welcome.login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('welcome.logout');

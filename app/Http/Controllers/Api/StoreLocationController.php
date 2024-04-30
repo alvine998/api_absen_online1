@@ -14,14 +14,23 @@ class StoreLocationController extends Controller
     {
         $limit = $req->get('limit');
         $store_id = $req->get('store_id');
+        $id = $req->get('id');
 
-        if ($store_id && $limit) {
-            $storelocation = StoreLocation::latest()->whereNull('deleted_at')->where('store_id', '=', $store_id)->paginate($limit);
-        } else if ($limit) {
-            $storelocation = StoreLocation::latest()->whereNull('deleted_at')->paginate($limit);
-        } else {
-            $storelocation = StoreLocation::latest()->whereNull('deleted_at')->paginate(5);
+        $storelocation = StoreLocation::latest()->whereNull('deleted_at');
+
+        if ($store_id) {
+            $storelocation->where('store_id', '=', $store_id)->paginate($limit || 5);
         }
+        if ($id) {
+            $storelocation->where('id', '=', $id)->paginate($limit || 5);
+        }
+        if ($limit) {
+            $storelocation->paginate($limit || 5);
+        } 
+        if(!$req->query()) {
+            $storelocation->paginate(5);
+        }
+        $storelocation->paginate(5);
 
         return new GeneralResource(true, 'List Data Lokasi Toko', $storelocation);
     }
@@ -29,6 +38,9 @@ class StoreLocationController extends Controller
     // Get Single Data
     public function show(StoreLocation $storelocation)
     {
+        if(!$storelocation){
+            return response()->json("Lokasi Toko tidak ada!", 404);
+        }
         if ($storelocation->deleted_at) {
             return response()->json("Lokasi Toko tidak ditemukan!", 404);
         }
