@@ -26,9 +26,8 @@ class AbsentController extends Controller
         $query = Absent::query()->whereNull('deleted_at');
         if ($search) {
             $query->where(function ($q) use ($search) {
-                $q->where('store_name', 'like', '%' . $search . '%');
-                $q->where('spg_name', 'like', '%' . $search . '%');
-
+                $q->where('store_name', 'like', '%' . $search . '%')
+                    ->orWhere('spg_name', 'like', '%' . $search . '%');
             });
         }
         if ($store_id) {
