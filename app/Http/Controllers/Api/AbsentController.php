@@ -27,6 +27,8 @@ class AbsentController extends Controller
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('store_name', 'like', '%' . $search . '%');
+                $q->where('spg_name', 'like', '%' . $search . '%');
+
             });
         }
         if ($store_id) {
