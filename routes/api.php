@@ -3,7 +3,7 @@
 use App\Http\Controllers\Api\AbsentController;
 use App\Http\Controllers\Api\IntervalController;
 use App\Http\Controllers\Api\LocationController;
-use App\Http\Controllers\api\MemberSpvController;
+use App\Http\Controllers\Api\MemberSpvController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\api\StockController;
 use App\Http\Controllers\Api\StoreController;
