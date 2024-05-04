@@ -34,7 +34,7 @@ Route::post('/users/login', [UserController::class, 'login'])->name('users.login
 Route::apiResource('/products', ProductController::class);
 Route::apiResource('/absents', AbsentController::class);
 Route::apiResource('/visits', VisitController::class);
-Route::apiResource('/memberspv', MemberSpvController::class);
+Route::apiResource('/memberspvs', MemberSpvController::class);
 Route::apiResource('/locations', LocationController::class);
 Route::apiResource('/intervals', IntervalController::class);
 Route::apiResource('/storelocations', StoreLocationController::class);
