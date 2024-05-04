@@ -111,18 +111,36 @@ class UserController extends Controller
             return response()->json("Pengguna tidak ditemukan!", 404);
         }
 
-        $user->update([
-            'name' => $req->name,
-            'nik' => $req->nik,
-            'email' => $req->email,
-            'type' => $req->type,
-            'role' => $req->role,
-            'created_by' => json_encode([
-                'user_name' => $req->user_name,
-                'user_type' => $req->user_type,
-                'user_id' => $req->user_id,
-            ])
-        ]);
+        if ($req->password) {
+            $hashPassword = Hash::make($req->password);
+
+            $user->update([
+                'name' => $req->name,
+                'nik' => $req->nik,
+                'email' => $req->email,
+                'type' => $req->type,
+                'role' => $req->role,
+                'password' => $hashPassword,
+                'created_by' => json_encode([
+                    'user_name' => $req->user_name,
+                    'user_type' => $req->user_type,
+                    'user_id' => $req->user_id,
+                ])
+            ]);
+        } else {
+            $user->update([
+                'name' => $req->name,
+                'nik' => $req->nik,
+                'email' => $req->email,
+                'type' => $req->type,
+                'role' => $req->role,
+                'created_by' => json_encode([
+                    'user_name' => $req->user_name,
+                    'user_type' => $req->user_type,
+                    'user_id' => $req->user_id,
+                ])
+            ]);
+        }
 
         return new UserResource(true, 'Data Pengguna Berhasil Diubah!', $user, null);
     }
