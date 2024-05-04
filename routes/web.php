@@ -5,7 +5,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IntervalController;
 use App\Http\Controllers\LocationController;
-use App\Http\Controllers\MemberSpv;
 use App\Http\Controllers\MemberSpvController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StockController;

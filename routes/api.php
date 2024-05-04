@@ -5,7 +5,7 @@ use App\Http\Controllers\Api\IntervalController;
 use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Api\MemberSpvController;
 use App\Http\Controllers\Api\ProductController;
-use App\Http\Controllers\api\StockController;
+use App\Http\Controllers\Api\StockController;
 use App\Http\Controllers\Api\StoreController;
 use App\Http\Controllers\Api\StoreLocationController;
 use App\Http\Controllers\Api\UserController;
