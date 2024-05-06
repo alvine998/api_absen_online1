@@ -57,7 +57,7 @@ class AbsentController extends Controller
     public function show(Absent $absent)
     {
         if ($absent->deleted_at) {
-            return response()->json("Absensi tidak ditemukan!", 404);
+            return response()->json(["success" => false, "message" => "Absensi tidak ditemukan!"], 404);
         }
         return new GeneralResource(true, 'Data Ditemukan', $absent);
     }
@@ -85,7 +85,7 @@ class AbsentController extends Controller
 
         $existSPG = User::where('id', $req->spg_id)->first();
         if (!$existSPG) {
-            return response()->json("SPG tidak ditemukan!", 404);
+            return response()->json(["success" => false, "message" => "SPG tidak ditemukan!"], 404);
         }
         $existAbsent = Absent::where('spg_id', '=', $req->spg_id)->get();
         $filteredUser1 = $existAbsent->where('date', $req->date)->where('type', 'in')->first();
@@ -93,10 +93,10 @@ class AbsentController extends Controller
 
         if ($filteredUser1) {
             if ($filteredUser1 && $filteredUser2) {
-                return response()->json("Anda sudah melakukan absen pada: " . $filteredUser1->date, 400);
+                return response()->json(["success" => false, "message" => "Anda sudah melakukan absen pada: " . $filteredUser1->date], 400);
             }
             if ($filteredUser1->type == $req->type) {
-                return response()->json("Anda sudah melakukan absen masuk pada: " . $filteredUser1->date, 400);
+                return response()->json(["success" => false, "message" => "Anda sudah melakukan absen masuk pada: " . $filteredUser1->date], 400);
             }
         }
 
@@ -142,7 +142,7 @@ class AbsentController extends Controller
         }
 
         if ($absent->deleted_at) {
-            return response()->json("Absensi tidak ditemukan!", 404);
+            return response()->json(["success" => false, "message" => "Absensi tidak ditemukan!"], 404);
         }
 
         //check if image is not empty
@@ -192,7 +192,7 @@ class AbsentController extends Controller
     public function destroy(Absent $absent)
     {
         if ($absent->deleted_at) {
-            return response()->json("Absensi tidak ditemukan!", 404);
+            return response()->json(["success" => false, "message" => "Absensi tidak ditemukan!"], 404);
         }
         $absent->deleted_at = now();
         $absent->save();
