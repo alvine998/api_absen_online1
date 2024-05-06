@@ -27,7 +27,7 @@ class UserController extends Controller
     {
         $this->validate($req, [
             'name' => 'required',
-            'email' => 'required',
+            'notes' => 'required',
             'nik' => 'required',
             'type' => 'required',
             'password' => 'required|min:8',
@@ -40,7 +40,7 @@ class UserController extends Controller
         User::create([
             'name' => $req->name,
             'nik' => $req->nik,
-            'email' => $req->email,
+            'notes' => $req->notes,
             'type' => $req->type,
             'password' => $hashPassword,
             'role' => $req->role,
@@ -63,7 +63,7 @@ class UserController extends Controller
     {
         $this->validate($req, [
             'name' => 'required',
-            'email' => 'required',
+            'notes' => 'required',
             'nik' => 'required',
             'type' => 'required',
             'user_name' => 'required',
@@ -77,7 +77,7 @@ class UserController extends Controller
             $user->update([
                 'name' => $req->name,
                 'nik' => $req->nik,
-                'email' => $req->email,
+                'notes' => $req->notes,
                 'type' => $req->type,
                 'password' => $hashPassword,
                 'role' => $req->role,
@@ -91,7 +91,7 @@ class UserController extends Controller
             $user->update([
                 'name' => $req->name,
                 'nik' => $req->nik,
-                'email' => $req->email,
+                'notes' => $req->notes,
                 'type' => $req->type,
                 'role' => $req->role,
                 'created_by' => json_encode([

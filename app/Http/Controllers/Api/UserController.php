@@ -20,7 +20,6 @@ class UserController extends Controller
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('email', 'like', '%' . $search . '%')
                     ->orWhere('nik', 'like', '%' . $search . '%');
             });
         }
@@ -55,7 +54,6 @@ class UserController extends Controller
     {
         $validator = Validator::make($req->all(), [
             'name' => 'required',
-            'email' => 'required',
             'nik' => 'required',
             'password' => 'required|min:8',
             'user_name' => 'required',
@@ -67,10 +65,6 @@ class UserController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        if (User::where('email', $req->email)->exists()) {
-            return response()->json("Email telah terdaftar!", 404);
-        }
-
         if (User::where('nik', $req->nik)->exists()) {
             return response()->json("NIK telah terdaftar!", 404);
         }
@@ -80,7 +74,7 @@ class UserController extends Controller
         $result = User::create([
             'name' => $req->name,
             'nik' => $req->nik,
-            'email' => $req->email,
+            'notes' => $req->notes,
             'type' => $req->type,
             'role' => $req->role,
             'password' => $hashPassword,
@@ -99,7 +93,6 @@ class UserController extends Controller
     {
         $validator = Validator::make($req->all(), [
             'name' => 'required',
-            'email' => 'required',
             'nik' => 'required'
         ]);
 
@@ -117,7 +110,7 @@ class UserController extends Controller
             $user->update([
                 'name' => $req->name,
                 'nik' => $req->nik,
-                'email' => $req->email,
+                'notes' => $req->notes,
                 'type' => $req->type,
                 'role' => $req->role,
                 'password' => $hashPassword,
@@ -131,7 +124,7 @@ class UserController extends Controller
             $user->update([
                 'name' => $req->name,
                 'nik' => $req->nik,
-                'email' => $req->email,
+                'notes' => $req->notes,
                 'type' => $req->type,
                 'role' => $req->role,
                 'created_by' => json_encode([

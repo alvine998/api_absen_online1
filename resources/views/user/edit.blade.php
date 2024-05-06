@@ -17,10 +17,6 @@
                     <input id="nik" name="nik" type="text" value="{{old('nik', $user->nik)}}" required placeholder="Masukkan NIK" class="w-full p-1 pl-2 rounded border border-gray-300" />
                 </div>
                 <div class="flex flex-col gap-1 mt-2">
-                    <label for="email">Email</label>
-                    <input id="email" name="email" value="{{old('email', $user->email)}}" type="email" required placeholder="Masukkan Email" class="w-full p-1 pl-2 rounded border border-gray-300" />
-                </div>
-                <div class="flex flex-col gap-1 mt-2">
                     <label for="type">Peran</label>
                     <select name="type" class="w-full p-1 border border-gray-300" id="type">
                         <option value="">Pilih Peran</option>
@@ -55,6 +51,10 @@
                 <div class="flex flex-col gap-1 mt-2">
                     <label for="password">Password</label>
                     <input id="password" name="password" value="{{old('password')}}" type="password" placeholder="Masukkan Password" class="w-full p-1 pl-2 rounded border border-gray-300" />
+                </div>
+                <div class="flex flex-col gap-1 mt-2">
+                    <label for="notes">Keterangan</label>
+                    <input id="notes" name="notes" value="{{old('notes', $user->notes)}}" placeholder="Masukkan Keterangan" class="w-full p-1 pl-2 rounded border border-gray-300" />
                 </div>
                 <input type="hidden" name="user_name" value="alvine">
                 <input type="hidden" name="user_type" value="admin">
