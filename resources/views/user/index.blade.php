@@ -23,6 +23,7 @@
                         <th class="border border-black bg-gray-300 px-4 py-2">NIK</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Peran</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Keterangan</th>
+                        <th class="border border-black bg-gray-300 px-4 py-2">Foto</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Aksi</th>
                     </tr>
                 </thead>
@@ -39,9 +40,12 @@
                             {{$users->type}} {{$users->role ? '- ' . $users->role : '- Anggota'}}
                         </td>
                         <td class="border px-4 py-2 border-black">
-                            {{$users->notes}}
+                            {{$users->notes ? $users->notes : '-'}}
                         </td>
-                        <td class="border px-4 py-2 border-black text-center flex gap-5 justify-center items-center">
+                        <td class="border px-4 py-2 border-black">
+                            <img src="{{Storage::url('storage/').$users->photo}}" alt="img-user" class="w-[150px] h-[150px]">
+                        </td>
+                        <td class="border px-4 py-2 border-black text-center">
                             <a href="{{route('user.edit', $users)}}" class="text-green-700 hover:text-green-600 text-3xl"><i class="fas fa-pen-square"></i></a>
                             <form onsubmit="return confirm('Apakah anda yakin ingin menghapus data ini?')" action="{{route('user.destroy', $users->id)}}" method="POST">
                                 @csrf

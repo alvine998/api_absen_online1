@@ -53,6 +53,10 @@
                     <input id="password" name="password" value="{{old('password')}}" type="password" required placeholder="Masukkan Password" class="w-full p-1 pl-2 rounded border border-gray-300" />
                 </div>
                 <div class="flex flex-col gap-1 mt-2">
+                    <label for="photo">Foto</label>
+                    <input id="photo" name="photo" value="{{old('photo')}}" type="file" class="w-full p-1 pl-2 rounded border border-gray-300" />
+                </div>
+                <div class="flex flex-col gap-1 mt-2">
                     <label for="notes">Keterangan</label>
                     <input id="notes" name="notes" value="{{old('notes')}}" placeholder="Masukkan Keterangan" class="w-full p-1 pl-2 rounded border border-gray-300" />
                 </div>

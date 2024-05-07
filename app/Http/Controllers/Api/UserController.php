@@ -70,6 +70,8 @@ class UserController extends Controller
         }
 
         $hashPassword = Hash::make($req->password);
+        $photo = $req->file('photo');
+        $photo->storeAs('public/storage', $photo->hashName());
 
         $result = User::create([
             'name' => $req->name,
@@ -77,6 +79,7 @@ class UserController extends Controller
             'notes' => $req->notes,
             'type' => $req->type,
             'role' => $req->role,
+            'photo' => $photo->hashName(),
             'password' => $hashPassword,
             'created_by' => json_encode([
                 'user_name' => $req->user_name,
@@ -104,6 +107,9 @@ class UserController extends Controller
             return response()->json("Pengguna tidak ditemukan!", 404);
         }
 
+        $photo = $req->file('photo');
+        $photo->storeAs('public/storage', $photo->hashName());
+
         if ($req->password) {
             $hashPassword = Hash::make($req->password);
 
@@ -114,6 +120,20 @@ class UserController extends Controller
                 'type' => $req->type,
                 'role' => $req->role,
                 'password' => $hashPassword,
+                'created_by' => json_encode([
+                    'user_name' => $req->user_name,
+                    'user_type' => $req->user_type,
+                    'user_id' => $req->user_id,
+                ])
+            ]);
+        } else if ($req->file('photo')) {
+            $user->update([
+                'name' => $req->name,
+                'nik' => $req->nik,
+                'notes' => $req->notes,
+                'type' => $req->type,
+                'role' => $req->role,
+                'photo' => $photo->hashName(),
                 'created_by' => json_encode([
                     'user_name' => $req->user_name,
                     'user_type' => $req->user_type,
