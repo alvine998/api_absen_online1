@@ -100,6 +100,10 @@ class AbsentController extends Controller
             }
         }
 
+        if (!$filteredUser1 && $req->type == "out") {
+            return response()->json(["success" => false, "message" => "Anda belum melakukan absen masuk pada: " . $req->date], 400);
+        }
+
 
         $image = $req->file('image');
         $image->storeAs('public/storage', $image->hashName());
