@@ -123,9 +123,6 @@ class UserController extends Controller
             return response()->json("Pengguna tidak ditemukan!", 404);
         }
 
-        $photo = $req->file('photo');
-        $photo->storeAs('public/storage', $photo->hashName());
-
         if ($req->password) {
             $hashPassword = Hash::make($req->password);
 
@@ -143,6 +140,9 @@ class UserController extends Controller
                 ])
             ]);
         } else if ($req->file('photo')) {
+            $photo = $req->file('photo');
+            $photo->storeAs('public/storage', $photo->hashName());
+
             $user->update([
                 'name' => $req->name,
                 'nik' => $req->nik,
@@ -198,10 +198,13 @@ class UserController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $existUser = User::where('nik', '=', $req->nik)->whereNull('deleted_at')->first();
-        $existStore = Store::where('user_id', '=', $existUser->id)->whereNull('deleted_at')->first();
+        $existUser = User::where('nik', '=', $req->nik)->where('deleted_at', '=', null)->first();
 
         if ($existUser) {
+            $existStore = Store::where('user_id', '=', $existUser->id)->whereNull('deleted_at')->first();
+            // if (!$existStore) {
+            //     return response()->json(["success" => false, "message" => "Toko tidak ditemukan!"], 404);
+            // }
             if (Hash::check($req->password, $existUser['password'])) {
                 if ($existUser['type'] == "spg") {
                     if ($existUser['role'] == "supervisor") {
