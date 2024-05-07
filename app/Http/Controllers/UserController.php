@@ -37,23 +37,38 @@ class UserController extends Controller
         ]);
         $hashPassword = Hash::make($req->password);
 
-        $photo = $req->file('photo');
-        $photo->storeAs('public/storage', $photo->hashName());
-
-        User::create([
-            'name' => $req->name,
-            'nik' => $req->nik,
-            'notes' => $req->notes,
-            'type' => $req->type,
-            'password' => $hashPassword,
-            'role' => $req->role,
-            'photo' => $photo->hashName(),
-            'created_by' => json_encode([
-                'user_name' => $req->user_name,
-                'user_type' => $req->user_type,
-                'user_id' => $req->user_id,
-            ])
-        ]);
+        if ($req->file('photo')) {
+            $photo = $req->file('photo');
+            $photo->storeAs('public/storage', $photo->hashName());
+            User::create([
+                'name' => $req->name,
+                'nik' => $req->nik,
+                'notes' => $req->notes,
+                'type' => $req->type,
+                'password' => $hashPassword,
+                'role' => $req->role,
+                'photo' => $photo->hashName(),
+                'created_by' => json_encode([
+                    'user_name' => $req->user_name,
+                    'user_type' => $req->user_type,
+                    'user_id' => $req->user_id,
+                ])
+            ]);
+        } else {
+            User::create([
+                'name' => $req->name,
+                'nik' => $req->nik,
+                'notes' => $req->notes,
+                'type' => $req->type,
+                'password' => $hashPassword,
+                'role' => $req->role,
+                'created_by' => json_encode([
+                    'user_name' => $req->user_name,
+                    'user_type' => $req->user_type,
+                    'user_id' => $req->user_id,
+                ])
+            ]);
+        }
 
         return redirect()->route('user.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
@@ -94,7 +109,7 @@ class UserController extends Controller
         } else if ($req->file('photo')) {
             $photo = $req->file('photo');
             $photo->storeAs('public/storage', $photo->hashName());
-            
+
             $user->update([
                 'name' => $req->name,
                 'nik' => $req->nik,

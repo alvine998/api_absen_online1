@@ -70,23 +70,39 @@ class UserController extends Controller
         }
 
         $hashPassword = Hash::make($req->password);
-        $photo = $req->file('photo');
-        $photo->storeAs('public/storage', $photo->hashName());
+        if ($req->file('photo')) {
+            $photo = $req->file('photo');
+            $photo->storeAs('public/storage', $photo->hashName());
 
-        $result = User::create([
-            'name' => $req->name,
-            'nik' => $req->nik,
-            'notes' => $req->notes,
-            'type' => $req->type,
-            'role' => $req->role,
-            'photo' => $photo->hashName(),
-            'password' => $hashPassword,
-            'created_by' => json_encode([
-                'user_name' => $req->user_name,
-                'user_type' => $req->user_type,
-                'user_id' => $req->user_id,
-            ])
-        ]);
+            $result = User::create([
+                'name' => $req->name,
+                'nik' => $req->nik,
+                'notes' => $req->notes,
+                'type' => $req->type,
+                'role' => $req->role,
+                'photo' => $photo->hashName(),
+                'password' => $hashPassword,
+                'created_by' => json_encode([
+                    'user_name' => $req->user_name,
+                    'user_type' => $req->user_type,
+                    'user_id' => $req->user_id,
+                ])
+            ]);
+        } else {
+            $result = User::create([
+                'name' => $req->name,
+                'nik' => $req->nik,
+                'notes' => $req->notes,
+                'type' => $req->type,
+                'role' => $req->role,
+                'password' => $hashPassword,
+                'created_by' => json_encode([
+                    'user_name' => $req->user_name,
+                    'user_type' => $req->user_type,
+                    'user_id' => $req->user_id,
+                ])
+            ]);
+        }
 
         return new UserResource(true, 'Data Pengguna Berhasil Ditambahkan', $result, null);
     }
