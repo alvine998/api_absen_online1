@@ -23,6 +23,7 @@
                         <th class="border border-black bg-gray-300 px-4 py-2">Latitude</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Longitude</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Foto</th>
+                        <th class="border border-black bg-gray-300 px-4 py-2">Keterangan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,7 +51,10 @@
                             </p>
                         </td>
                         <td class="border px-4 py-2 border-black flex items-center justify-center">
-                            <img src="{{Storage::url('storage/').$absents->image}}" alt="img-absent" class="w-[150px] h-[150px]">
+                            <img src="{{Storage::url('storage/').$visitors->image}}" alt="img-absent" class="w-[150px] h-[150px]">
+                        </td>
+                        <td class="border px-4 py-2 border-black">
+                            {{$visitors->note}}
                         </td>
                     </tr>
                     @empty
