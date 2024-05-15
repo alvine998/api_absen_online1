@@ -17,7 +17,6 @@ class VisitController extends Controller
     {
         $search = $req->get('search');
         $store_id = $req->get('store_id');
-        $store_type = $req->get('store_type');
         $date_start = $req->get('date_start');
         $date_end = $req->get('date_end');
 
@@ -29,9 +28,6 @@ class VisitController extends Controller
         }
         if ($store_id) {
             $query->latest()->where('store_id', '=', $store_id);
-        }
-        if ($store_type) {
-            $query->latest()->where('store_type', '=', $store_type);
         }
         if($date_start && $date_end){
             $dateStart = Carbon::parse($date_start);
@@ -63,7 +59,6 @@ class VisitController extends Controller
         $validator = Validator::make($req->all(), [
             'store_id' => 'required',
             'store_name' => 'required',
-            'store_type' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
             'in_date' => 'required',
             'in_time' => 'required',
@@ -82,7 +77,6 @@ class VisitController extends Controller
         $result = Visit::create([
             'store_id' => $req->store_id,
             'store_name' => $req->store_name,
-            'store_type' => $req->store_type,
             'image' => $image->hashName(),
             'in_date' => $req->in_date,
             'in_time' => $req->in_time,
@@ -104,7 +98,6 @@ class VisitController extends Controller
         $validator = Validator::make($req->all(), [
             'store_id' => 'required',
             'store_name' => 'required',
-            'store_type' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
             'in_date' => 'required',
             'in_time' => 'required',
@@ -134,7 +127,6 @@ class VisitController extends Controller
             $visit->update([
                 'store_id' => $req->store_id,
                 'store_name' => $req->store_name,
-                'store_type' => $req->store_type,
                 'image' => $image->hashName(),
                 'in_date' => $req->in_date,
                 'in_time' => $req->in_time,
@@ -152,7 +144,6 @@ class VisitController extends Controller
             $visit->update([
                 'store_id' => $req->store_id,
                 'store_name' => $req->store_name,
-                'store_type' => $req->store_type,
                 'in_date' => $req->in_date,
                 'in_time' => $req->in_time,
                 'in_lat' => $req->in_lat,

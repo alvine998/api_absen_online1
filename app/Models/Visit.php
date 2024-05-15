@@ -12,7 +12,6 @@ class Visit extends Model
     protected $fillable = [
         'store_id',
         'store_name',
-        'store_type',
         'image',
         'in_date',
         'in_time',

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->integer('store_id');
             $table->string('store_name');
-            $table->string('store_type');
             $table->string('note')->nullable();
             $table->string('image');
             $table->date('in_date');
