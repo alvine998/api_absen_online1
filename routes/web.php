@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IntervalController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\MemberSalesController;
 use App\Http\Controllers\MemberSpvController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\StockController;
@@ -36,6 +37,7 @@ Route::resource('/interval', IntervalController::class);
 Route::resource('/location', LocationController::class);
 Route::resource('/storelocation', StoreLocationController::class);
 Route::resource('/stock', StockController::class);
+Route::resource('/membersales', MemberSalesController::class);
 
 Route::resource('/', AuthController::class);
 Route::post('/login', [AuthController::class, 'login'])->name('welcome.login');

@@ -27,7 +27,6 @@ class UserController extends Controller
     {
         $this->validate($req, [
             'name' => 'required',
-            'notes' => 'required',
             'nik' => 'required',
             'type' => 'required',
             'password' => 'required|min:8',
@@ -82,7 +81,6 @@ class UserController extends Controller
     {
         $this->validate($req, [
             'name' => 'required',
-            'notes' => 'required',
             'nik' => 'required',
             'type' => 'required',
             'user_name' => 'required',

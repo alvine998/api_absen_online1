@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AbsentController;
 use App\Http\Controllers\Api\IntervalController;
 use App\Http\Controllers\Api\LocationController;
+use App\Http\Controllers\Api\MemberSalesController;
 use App\Http\Controllers\Api\MemberSpvController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\StockController;
@@ -39,3 +40,4 @@ Route::apiResource('/locations', LocationController::class);
 Route::apiResource('/intervals', IntervalController::class);
 Route::apiResource('/storelocations', StoreLocationController::class);
 Route::apiResource('/stocks', StockController::class);
+Route::apiResource('/membersales', MemberSalesController::class);
