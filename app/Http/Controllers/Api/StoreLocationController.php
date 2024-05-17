@@ -27,12 +27,12 @@ class StoreLocationController extends Controller
         if ($limit) {
             $storelocation->paginate($limit || 5);
         } 
+        $stores = $storelocation->paginate(5);
         if(!$req->query()) {
-            $storelocation->paginate(5);
+            $stores = StoreLocation::latest()->whereNull('deleted_at')->paginate(5);
         }
-        $storelocation->paginate(5);
 
-        return new GeneralResource(true, 'List Data Lokasi Toko', $storelocation);
+        return new GeneralResource(true, 'List Data Lokasi Toko', $stores);
     }
 
     // Get Single Data
