@@ -60,6 +60,7 @@ class ProductController extends Controller
             'code' => $req->code,
             'name' => $req->name,
             'qty' => $req->qty,
+            'min_price' => $req->min_price,
             'price' => $req->price,
             'note' => $req->note
         ]);
@@ -93,6 +94,7 @@ class ProductController extends Controller
             'code' => $req->code,
             'name' => $req->name,
             'qty' => $req->qty,
+            'min_price' => $req->min_price,
             'price' => $req->price,
             'note' => $req->note
         ]);

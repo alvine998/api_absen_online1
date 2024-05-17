@@ -23,14 +23,14 @@ class VisitController extends Controller
 
         $query = Visit::query()->whereNull('deleted_at');
         if ($search) {
-            $query->where(function ($q) use ($search){
+            $query->where(function ($q) use ($search) {
                 $q->where('store_name', 'like', '%' . $search . '%');
             });
         }
         if ($store_id) {
             $query->latest()->where('store_id', '=', $store_id);
         }
-        if($date_start && $date_end){
+        if ($date_start && $date_end) {
             $dateStart = Carbon::parse($date_start);
             $dateEnd = Carbon::parse($date_end)->endOfDay();
 
@@ -60,6 +60,7 @@ class VisitController extends Controller
         $validator = Validator::make($req->all(), [
             'store_id' => 'required',
             'store_name' => 'required',
+            'store_code' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
             'in_date' => 'required',
             'in_time' => 'required',
@@ -79,6 +80,7 @@ class VisitController extends Controller
         $result = Visit::create([
             'store_id' => $req->store_id,
             'store_name' => $req->store_name,
+            'store_code' => $req->store_code,
             'image' => $image->hashName(),
             'in_date' => $req->in_date,
             'in_time' => $req->in_time,
@@ -130,6 +132,7 @@ class VisitController extends Controller
             $visit->update([
                 'store_id' => $req->store_id,
                 'store_name' => $req->store_name,
+                'store_code' => $req->store_code,
                 'image' => $image->hashName(),
                 'in_date' => $req->in_date,
                 'in_time' => $req->in_time,
@@ -148,6 +151,7 @@ class VisitController extends Controller
             $visit->update([
                 'store_id' => $req->store_id,
                 'store_name' => $req->store_name,
+                'store_code' => $req->store_code,
                 'in_date' => $req->in_date,
                 'in_time' => $req->in_time,
                 'in_lat' => $req->in_lat,

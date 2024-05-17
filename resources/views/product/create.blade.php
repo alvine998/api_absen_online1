@@ -20,8 +20,12 @@
                     <input id="qty" name="qty" type="number" value="{{old('qty')}}" required placeholder="Masukkan Jumlah Produk" class="w-full p-1 pl-2 rounded border border-gray-300" />
                 </div>
                 <div class="flex flex-col gap-1 mt-2">
-                    <label for="price">Harga Satuan (Rp)</label>
-                    <input id="price" name="price" type="number" value="{{old('price')}}" required placeholder="Masukkan Harga Satuan" class="w-full p-1 pl-2 rounded border border-gray-300" />
+                    <label for="price">Harga Maksimal (Rp)</label>
+                    <input id="price" name="price" type="number" value="{{old('price')}}" required placeholder="Masukkan Harga Maksimal" class="w-full p-1 pl-2 rounded border border-gray-300" />
+                </div>
+                <div class="flex flex-col gap-1 mt-2">
+                    <label for="min_price">Harga Minimal (Rp)</label>
+                    <input id="min_price" name="min_price" type="number" value="{{old('min_price')}}" required placeholder="Masukkan Harga Minimal" class="w-full p-1 pl-2 rounded border border-gray-300" />
                 </div>
                 <div class="flex flex-col gap-1 mt-2">
                     <label for="note">Keterangan</label>

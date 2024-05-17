@@ -13,6 +13,7 @@ class Product extends Model
         'code',
         'name',
         'qty',
+        'min_price',
         'price',
         'note'
     ];
