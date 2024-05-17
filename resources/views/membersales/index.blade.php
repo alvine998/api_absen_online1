@@ -3,11 +3,11 @@
 @section('content')
 @if(session()->has('success'))
 <div class="bg-green-200 w-full p-2">
-    <p class="text-green-500">Berhasil Menyimpan Data!</p>
+    <p class="text-green-500">{{session('success')}}</p>
 </div>
 @elseif(session()->has('error'))
 <div class="bg-red-200 w-full p-2">
-    <p class="text-red-500">Berhasil Menyimpan Data!</p>
+    <p class="text-red-500">{{session('error')}}</p>
 </div>
 @endif
 
@@ -55,7 +55,8 @@
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
     let modal = document.getElementById('modal');
     let btn = document.getElementById('open-btn');

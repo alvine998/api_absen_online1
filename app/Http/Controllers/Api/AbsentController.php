@@ -119,6 +119,7 @@ class AbsentController extends Controller
             'image' => $image->hashName(),
             'latt' => $req->latt,
             'long' => $req->long,
+            'note' => $req->note,
             'user_login' => $req->user_login
         ]);
 
@@ -170,6 +171,7 @@ class AbsentController extends Controller
                 'image' => $image->hashName(),
                 'latt' => $req->latt,
                 'long' => $req->long,
+                'note' => $req->note,
                 'user_login' => $req->user_login
             ]);
         } else {
@@ -185,6 +187,7 @@ class AbsentController extends Controller
                 'type' => $req->type,
                 'latt' => $req->latt,
                 'long' => $req->long,
+                'note' => $req->note,
                 'user_login' => $req->user_login
             ]);
         }

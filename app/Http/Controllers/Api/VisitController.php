@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\GeneralResource;
+use App\Models\Store;
 use App\Models\Visit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -66,6 +67,7 @@ class VisitController extends Controller
             'in_long' => 'required',
             'user_login' => 'required'
         ]);
+        Store::where('id', $req->id)->whereNull('deleted_at')->first();
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
@@ -86,7 +88,8 @@ class VisitController extends Controller
             'out_time' => $req->out_time,
             'out_lat' => $req->out_lat,
             'out_long' => $req->out_long,
-            'user_login' => $req->user_login
+            'user_login' => $req->user_login,
+            'note' => $req->note
         ]);
 
         return new GeneralResource(true, 'Data Pengunjung Berhasil Ditambahkan', $result);
@@ -136,7 +139,8 @@ class VisitController extends Controller
                 'out_time' => $req->out_time,
                 'out_lat' => $req->out_lat,
                 'out_long' => $req->out_long,
-                'user_login' => $req->user_login
+                'user_login' => $req->user_login,
+                'note' => $req->note
             ]);
         } else {
 
@@ -152,7 +156,8 @@ class VisitController extends Controller
                 'out_time' => $req->out_time,
                 'out_lat' => $req->out_lat,
                 'out_long' => $req->out_long,
-                'user_login' => $req->user_login
+                'user_login' => $req->user_login,
+                'note' => $req->note
             ]);
         }
 

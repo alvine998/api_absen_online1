@@ -41,14 +41,19 @@ class MemberSalesController extends Controller
 
         foreach (json_decode($req->users) as $data) {
             $existUser = User::where('id', $data->id)->whereNull('deleted_at')->first();
-
+            $existMemberSales = MemberSales::where([['user_id', '=', $data->id], ['store_id', '=', $req->store_id]])->whereNull('deleted_at')->first();
             if (!$existUser) {
                 return response()->json("Sales Tidak Ditemukan!", 404);
+            }
+
+            if ($existMemberSales) {
+                return response()->json("Sales Telah Terdaftar!", 404);
             }
 
             MemberSales::create([
                 'store_id' => $req->store_id,
                 'store_name' => $store->name,
+                'store_code' => $store->code,
                 'user_id' => $data->id,
                 'user_name' => $existUser->name
             ]);
@@ -66,7 +71,6 @@ class MemberSalesController extends Controller
     {
         $this->validate($req, [
             'store_id' => 'required',
-            'store_name' => 'required',
             'user_id' => 'required'
         ]);
 
@@ -88,8 +92,9 @@ class MemberSalesController extends Controller
 
     public function destroy(MemberSales $membersales)
     {
-        $membersales->deleted_at = now();
-        $membersales->save();
+        echo($membersales);
+        // $membersales->deleted_at = now();
+        // $membersales->save();
         return redirect()->route('membersales.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }

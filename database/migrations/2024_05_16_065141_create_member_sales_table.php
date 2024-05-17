@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('store_name');
             $table->integer('user_id');
             $table->string('user_name');
-            $table->timestamp('deleted_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('image');
             $table->string('latt');
             $table->string('long');
+            $table->string('note')->nullable();
             $table->json('user_login');
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();

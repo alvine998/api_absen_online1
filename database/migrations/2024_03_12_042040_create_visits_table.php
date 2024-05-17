@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('visits', function (Blueprint $table) {
             $table->id();
-            $table->integer('store_id');
+            $table->integer('store_id')->nullable();
             $table->string('store_name');
+            $table->string('store_code');
             $table->string('note')->nullable();
             $table->string('image');
             $table->date('in_date');

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('code');
             $table->string('name');
             $table->double('price');
+            $table->double('min_price')->nullable();
             $table->float('qty');
             $table->string('note')->nullable();
             $table->timestamp('deleted_at')->nullable();

@@ -19,11 +19,13 @@
                 <thead>
                     <tr>
                         <th class="border border-black bg-gray-300 px-4 py-2">Toko</th>
+                        <th class="border border-black bg-gray-300 px-4 py-2">Nama</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Waktu</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Latitude</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Longitude</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Jenis Absen</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Gambar</th>
+                        <th class="border border-black bg-gray-300 px-4 py-2">Keterangan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,6 +33,9 @@
                     <tr>
                         <td class="border px-4 py-2 border-black">
                             {{$absents->store_name}}
+                        </td>
+                        <td class="border px-4 py-2 border-black">
+                            {{$absents->spg_name}}
                         </td>
                         <td class="border px-4 py-2 border-black">
                             <p>
@@ -50,6 +55,11 @@
                         <td class="border px-4 py-2 border-black">
                             <p>
                                 {{$absents->type}}
+                            </p>
+                        </td>
+                        <td class="border px-4 py-2 border-black">
+                            <p>
+                                {{$absents->note}}
                             </p>
                         </td>
                         <td class="border px-4 py-2 border-black flex items-center justify-center">

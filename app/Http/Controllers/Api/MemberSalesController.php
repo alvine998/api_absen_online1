@@ -19,7 +19,7 @@ class MemberSalesController extends Controller
         if ($store_id && $limit) {
             $membersales = MemberSales::latest()->whereNull('deleted_at')->where('store_id', '=', $store_id)->paginate($limit);
         } else if ($user_id) {
-            $membersales = MemberSales::latest()->whereNull('deleted_at')->where('user_id', '=', $user_id)->paginate(1);
+            $membersales = MemberSales::latest()->whereNull('deleted_at')->where('user_id', '=', $user_id)->paginate(999);
         } else if ($limit) {
             $membersales = MemberSales::latest()->whereNull('deleted_at')->paginate($limit);
         } else {
