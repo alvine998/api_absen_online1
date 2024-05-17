@@ -57,13 +57,13 @@
                                 {{$absents->type}}
                             </p>
                         </td>
+                        <td class="border px-4 py-2 border-black flex items-center justify-center">
+                            <img src="{{Storage::url('storage/').$absents->image}}" alt="img-absent" class="w-[150px] h-[150px]">
+                        </td>
                         <td class="border px-4 py-2 border-black">
                             <p>
                                 {{$absents->note}}
                             </p>
-                        </td>
-                        <td class="border px-4 py-2 border-black flex items-center justify-center">
-                            <img src="{{Storage::url('storage/').$absents->image}}" alt="img-absent" class="w-[150px] h-[150px]">
                         </td>
                     </tr>
                     @empty
