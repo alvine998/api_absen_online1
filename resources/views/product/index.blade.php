@@ -22,7 +22,8 @@
                         <th class="border border-black bg-gray-300 px-4 py-2">Kode</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Nama</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Stok</th>
-                        <th class="border border-black bg-gray-300 px-4 py-2">Harga Satuan</th>
+                        <th class="border border-black bg-gray-300 px-4 py-2">Harga Minimal</th>
+                        <th class="border border-black bg-gray-300 px-4 py-2">Harga Maksimal</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Keterangan</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Aksi</th>
                     </tr>
@@ -38,6 +39,9 @@
                         </td>
                         <td class="border px-4 py-2 border-black">
                             {{$products->qty}}
+                        </td>
+                        <td class="border px-4 py-2 border-black">
+                            {{$products->min_price}}
                         </td>
                         <td class="border px-4 py-2 border-black">
                             {{$products->price}}
