@@ -22,9 +22,15 @@ class StoreController extends Controller
             });
         }
         if ($req->get('user_id')) {
-            $query->latest()->where('user_id', '=', $req->get('user_id'));
+            $query->latest()->where('user_id', $req->get('user_id'));
         }
-        $store = $query->paginate(5);
+        if ($req->get('type') == "sales") {
+            $query->latest()->where('user_id', 0);
+        }
+        if ($req->get('type') == "spg") {
+            $query->latest()->where('user_id', '>', 0);
+        }
+        $store = $query->paginate($req->get('limit') !== 0 ? $req->get('limit') : 5);
 
         if (!$req->query()) {
             $store = Store::latest()->whereNull('deleted_at')->paginate(5);

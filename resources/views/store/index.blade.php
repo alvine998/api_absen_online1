@@ -22,6 +22,7 @@
                         <th class="border border-black bg-gray-300 px-4 py-2">Kode</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Nama Toko</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Keterangan</th>
+                        <th class="border border-black bg-gray-300 px-4 py-2">Status</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Aksi</th>
                     </tr>
                 </thead>
@@ -35,7 +36,10 @@
                             {{$stores->name}}
                         </td>
                         <td class="border px-4 py-2 border-black">
-                            {{$stores->note1}}
+                            {{$stores->note1 !== null ? $stores->note1 : "-"}}
+                        </td>
+                        <td class="border px-4 py-2 border-black">
+                            {{$stores->user_id == 0 ? "Sales" : "SPG"}}
                         </td>
                         <td class="border px-4 py-2 border-black text-center flex gap-5 justify-center items-center">
                             <a href="{{route('store.edit', $stores)}}" class="text-green-700 hover:text-green-600 text-3xl"><i class="fas fa-pen-square"></i></a>

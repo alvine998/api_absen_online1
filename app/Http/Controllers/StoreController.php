@@ -30,7 +30,6 @@ class StoreController extends Controller
     public function store(Request $req)
     {
         $validator = Validator::make($req->all(), [
-            'user_id' => 'required',
             'code' => 'required',
             'name' => 'required',
         ]);
@@ -40,7 +39,7 @@ class StoreController extends Controller
         }
 
         Store::create([
-            'user_id' => $req->user_id,
+            'user_id' => $req->user_id || 0,
             'code' => $req->code,
             'name' => $req->name,
             'note1' => $req->note1,
@@ -59,13 +58,12 @@ class StoreController extends Controller
     public function update(Request $req, Store $store)
     {
         $this->validate($req, [
-            'user_id' => 'required',
             'code' => 'required',
             'name' => 'required',
         ]);
 
         $store->update([
-            'user_id' => $req->user_id,
+            'user_id' => $req->user_id || 0,
             'code' => $req->code,
             'name' => $req->name,
             'note1' => $req->note1,
