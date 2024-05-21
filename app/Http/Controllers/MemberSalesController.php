@@ -23,7 +23,7 @@ class MemberSalesController extends Controller
     public function create()
     {
         $sales = User::latest()->whereNull('deleted_at')->where([['type', '=', 'sales']])->paginate(9999);
-        $stores = Store::latest()->whereNull('deleted_at')->paginate(9999);
+        $stores = Store::latest()->whereNull('deleted_at')->where([['user_id', '=', 0]])->paginate(9999);
 
         return view('membersales.create', compact('sales', 'stores'));
     }
@@ -53,7 +53,6 @@ class MemberSalesController extends Controller
             MemberSales::create([
                 'store_id' => $req->store_id,
                 'store_name' => $store->name,
-                'store_code' => $store->code,
                 'user_id' => $data->id,
                 'user_name' => $existUser->name
             ]);
@@ -78,12 +77,12 @@ class MemberSalesController extends Controller
         $existUser = User::where('user_id', $req->user_id)->whereNull('deleted_at')->first();
 
         if (!$existUser) {
-            return response()->json("SPG Tidak Ditemukan!", 404);
+            return response()->json("Sales Tidak Ditemukan!", 404);
         }
 
         $membersales->update([
-            'spv_id' => $req->spv_id,
-            'spv_name' => $existStore->name,
+            'store_id' => $req->store_id,
+            'store_name' => $existStore->name,
             'user_id' => $req->user_id,
             'user_name' => $existUser->name
         ]);
@@ -92,9 +91,12 @@ class MemberSalesController extends Controller
 
     public function destroy(MemberSales $membersales)
     {
-        echo($membersales);
+        // $membersales->store_name = $membersales->store_name;
+        // $membersales->user_id = $membersales->user_id;
+        // $membersales->user_name = $membersales->user_name;
         // $membersales->deleted_at = now();
         // $membersales->save();
-        return redirect()->route('membersales.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        echo ($membersales . 'members');
+        return redirect()->route('membersales.index')->with(['success' => 'Data Berhasil Dihapus!' . $membersales->store_name]);
     }
 }
