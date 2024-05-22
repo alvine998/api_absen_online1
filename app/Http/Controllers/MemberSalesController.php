@@ -13,9 +13,9 @@ class MemberSalesController extends Controller
 {
     public function index()
     {
-        $membersales = MemberSales::latest()->whereNull('deleted_at')->paginate(5);
+        $membersaless = MemberSales::latest()->whereNull('deleted_at')->paginate(5);
         if (Auth::check()) {
-            return view('membersales.index', compact('membersales'));
+            return view('membersales.index', compact('membersaless'));
         }
         return redirect("/")->withSuccess('Opps! You do not have access');
     }
@@ -91,14 +91,10 @@ class MemberSalesController extends Controller
         return redirect()->route('membersales.index')->with(['success' => 'Data Berhasil Disimpan!']);
     }
 
-    public function destroy(MemberSales $membersales)
+    public function destroy(MemberSales $membersale)
     {
-        // $membersales->store_name = $membersales->store_name;
-        // $membersales->user_id = $membersales->user_id;
-        // $membersales->user_name = $membersales->user_name;
-        // $membersales->deleted_at = now();
-        // $membersales->save();
-        echo ($membersales . 'members');
-        return redirect()->route('membersales.index')->with(['success' => 'Data Berhasil Dihapus!' . $membersales->store_name]);
+        $membersale->deleted_at = now();
+        $membersale->save();
+        return redirect()->route('membersales.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
 }

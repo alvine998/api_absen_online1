@@ -25,7 +25,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($membersales as $members)
+                    @forelse ($membersaless as $members)
                     <tr>
                         <td class="border px-4 py-2 border-black uppercase text-center">
                             {{$members->store_name}}
@@ -51,7 +51,7 @@
             </table>
         </div>
 
-        {{$membersales->links()}}
+        {{$membersaless->links()}}
     </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
