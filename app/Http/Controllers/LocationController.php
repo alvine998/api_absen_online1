@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Location;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -15,6 +16,16 @@ class LocationController extends Controller
         $location = Location::latest()->whereNull('deleted_at')->paginate(5);
         if (Auth::check()) {
             return view('location.index', compact('location'));
+        }
+        return redirect("/")->withSuccess('Opps! You do not have access');
+    }
+
+    public function detail(Location $location)
+    {
+        $formattedDate = Carbon::parse($location->created_at)->format('Y-m-d');
+        $location = Location::latest()->where([['user_id', '=', $location->user_id], ['created_at', 'LIKE', "{$formattedDate}%"]])->whereNull('deleted_at')->paginate(5);
+        if (Auth::check()) {
+            return view('location.detail', compact('location'));
         }
         return redirect("/")->withSuccess('Opps! You do not have access');
     }

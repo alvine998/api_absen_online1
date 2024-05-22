@@ -15,9 +15,8 @@ return new class extends Migration
     {
         Schema::create('stock_opnames', function (Blueprint $table) {
             $table->id();
-            $table->integer('store_id');
+            $table->integer('store_id')->nullable();
             $table->string('store_name');
-            $table->string('store_code');
             $table->integer('ref_no');
             $table->date('date');
             $table->softDeletes();

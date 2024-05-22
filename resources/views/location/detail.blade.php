@@ -12,7 +12,10 @@
 @endif
 
 <div class="mt-[50px] px-10">
-    <h2 class="text-2xl font-bold">Lokasi Pengguna</h2>
+    <div class="my-4">
+        <a href="{{route('location.index')}}" class="text-gray-700 hover:text-gray-600 text-xl border p-2 rounded"><i class="fas fa-chevron-left"></i> Kembali</a>
+    </div>
+    <h2 class="text-2xl font-bold">Detail Lokasi Pengguna</h2>
     <div class="bg-white shadow w-full rounded-md p-4 mt-2">
         <!-- <a href="{{route('location.create')}}" class="w-auto p-2 bg-blue-500 rounded text-white">Tambah Data</a> -->
         <div class="overflow-x-auto mt-5">
@@ -23,7 +26,6 @@
                         <th class="border border-black bg-gray-300 px-4 py-2">Latitude</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Longitude</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Waktu</th>
-                        <th class="border border-black bg-gray-300 px-4 py-2">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,9 +43,6 @@
                         <td class="border px-4 py-2 border-black text-center">
                             {{$locations->created_at}}
                         </td>
-                        <td class="border px-4 py-2 border-black text-center flex gap-5 justify-center items-center">
-                            <a href="{{route('location.detail', $locations)}}" class="text-yellow-700 hover:text-yellow-600 text-3xl"><i class="fas fa-eye"></i></a>
-                        </td>
                     </tr>
                     @empty
                     <div class="bg-red-200 w-full p-2 rounded-md my-2">
@@ -57,8 +56,51 @@
         {{$location->links()}}
     </div>
 </div>
+<div class="px-10 mt-10">
+    <div id="map"></div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+    // Initialize the map
+    var locations = @json($location);
+    var map = L.map('map').setView([locations.data[0].latt, locations.data[0].long], 13);
+
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    var waypoints = [];
+
+    // Add a marker
+    locations.data.forEach(function(loc) {
+        L.marker([loc.latt, loc.long]).addTo(map)
+            .bindPopup(`${loc.latt}, ${loc.long}`)
+        waypoints.push(L.latLng(loc.latt, loc.long));
+    })
+
+    // Add routing
+    L.Routing.control({
+        waypoints: waypoints,
+        routeWhileDragging: false,
+        show: false,
+        router: L.Routing.osrmv1({
+            language: 'en',
+            units: 'metric'
+        }),
+        lineOptions: {
+            styles: [{
+                color: '#007bff',
+                opacity: 0.7,
+                weight: 5
+            }]
+        },
+    }).addTo(map);
+</script>
 <script>
     let modal = document.getElementById('modal');
     let btn = document.getElementById('open-btn');

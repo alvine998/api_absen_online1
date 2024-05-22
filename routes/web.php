@@ -42,3 +42,4 @@ Route::resource('/membersales', MemberSalesController::class);
 Route::resource('/', AuthController::class);
 Route::post('/login', [AuthController::class, 'login'])->name('welcome.login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('welcome.logout');
+Route::get('/location/detail/{location}', [LocationController::class, 'detail'])->name('location.detail');
