@@ -14,6 +14,7 @@ class MemberSales extends Model
     protected $fillable = [
         'store_id',
         'store_name',
+        'store_code',
         'user_id',
         'user_name'
     ];

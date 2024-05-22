@@ -53,6 +53,7 @@ class MemberSalesController extends Controller
             MemberSales::create([
                 'store_id' => $req->store_id,
                 'store_name' => $store->name,
+                'store_code' => $store->code,
                 'user_id' => $data->id,
                 'user_name' => $existUser->name
             ]);
@@ -83,6 +84,7 @@ class MemberSalesController extends Controller
         $membersales->update([
             'store_id' => $req->store_id,
             'store_name' => $existStore->name,
+            'store_code' => $existStore->code,
             'user_id' => $req->user_id,
             'user_name' => $existUser->name
         ]);

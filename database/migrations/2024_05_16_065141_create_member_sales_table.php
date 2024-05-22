@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('store_id');
             $table->string('store_name');
+            $table->string('store_code');
             $table->integer('user_id');
             $table->string('user_name');
             $table->softDeletes();
