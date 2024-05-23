@@ -22,6 +22,7 @@ class VisitController extends Controller
         $user_id = $req->get('user_id');
         $date_start = $req->get('date_start');
         $date_end = $req->get('date_end');
+        $limit = $req->get('limit');
 
         $query = Visit::query()->whereNull('deleted_at');
         if ($search) {
@@ -41,7 +42,7 @@ class VisitController extends Controller
 
             $query->latest()->whereBetween('created_at', [$dateStart, $dateEnd]);
         }
-        $visit = $query->paginate(5);
+        $visit = $query->paginate($limit ? $limit : 5);
 
         if (!$req->query()) {
             $visit = Visit::latest()->whereNull('deleted_at')->paginate(5);
