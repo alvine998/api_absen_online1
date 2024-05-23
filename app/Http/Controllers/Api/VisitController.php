@@ -46,12 +46,7 @@ class VisitController extends Controller
         if (!$req->query()) {
             $visit = Visit::latest()->whereNull('deleted_at')->paginate(5);
         }
-
-        $arras = json_decode($visit[0]['user_login']);
-        while ($data = $arras) {
-            dd($data['user_id']);
-        }
-        return new GeneralResource(true, 'List Data Pengunjung' . $arras, $arras);
+        return new GeneralResource(true, 'List Data Pengunjung', $visit);
     }
 
     // Get Single Data
