@@ -20,10 +20,19 @@ class LocationController extends Controller
         return redirect("/")->withSuccess('Opps! You do not have access');
     }
 
+    public function filter(Request $request)
+    {
+        $location = Location::latest()->where([['user_name', 'LIKE', $request->search]])->whereNull('deleted_at')->paginate($request->limit || 5);
+        if (Auth::check()) {
+            return view('location.index', compact('location'));
+        }
+        return redirect("/")->withSuccess('Opps! You do not have access');
+    }
+
     public function detail(Location $location)
     {
         $formattedDate = Carbon::parse($location->created_at)->format('Y-m-d');
-        $location = Location::latest()->where([['user_id', '=', $location->user_id], ['created_at', 'LIKE', "{$formattedDate}%"]])->whereNull('deleted_at')->paginate(5);
+        $location = Location::latest()->where([['user_id', '=', $location->user_id], ['created_at', 'LIKE', "{$formattedDate}%"]])->whereNull('deleted_at')->paginate(10);
         if (Auth::check()) {
             return view('location.detail', compact('location'));
         }
