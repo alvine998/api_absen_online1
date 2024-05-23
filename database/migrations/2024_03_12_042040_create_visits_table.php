@@ -20,9 +20,9 @@ return new class extends Migration
             $table->string('store_code');
             $table->string('note')->nullable();
             $table->string('image');
-            $table->date('in_date');
-            $table->time('in_time');
-            $table->string('in_lat');
+            $table->date('in_date')->nullable();
+            $table->time('in_time')->nullable();
+            $table->string('in_lat')->nullable();
             $table->string('in_long')->nullable();
             $table->date('out_date')->nullable();
             $table->time('out_time')->nullable();
