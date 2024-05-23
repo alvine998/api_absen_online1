@@ -8,6 +8,7 @@ use App\Models\Store;
 use App\Models\Visit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -18,6 +19,7 @@ class VisitController extends Controller
     {
         $search = $req->get('search');
         $store_id = $req->get('store_id');
+        $user_id = $req->get('user_id');
         $date_start = $req->get('date_start');
         $date_end = $req->get('date_end');
 
@@ -29,6 +31,9 @@ class VisitController extends Controller
         }
         if ($store_id) {
             $query->latest()->where('store_id', '=', $store_id);
+        }
+        if ($user_id) {
+            $query->whereRaw("JSON_EXTRACT(user_login, '$.user_id') = ?", [$user_id]);
         }
         if ($date_start && $date_end) {
             $dateStart = Carbon::parse($date_start);
@@ -42,7 +47,11 @@ class VisitController extends Controller
             $visit = Visit::latest()->whereNull('deleted_at')->paginate(5);
         }
 
-        return new GeneralResource(true, 'List Data Pengunjung', $visit);
+        $arras = json_decode($visit[0]['user_login']);
+        while ($data = $arras) {
+            dd($data['user_id']);
+        }
+        return new GeneralResource(true, 'List Data Pengunjung' . $arras, $arras);
     }
 
     // Get Single Data
@@ -102,13 +111,7 @@ class VisitController extends Controller
     {
         $validator = Validator::make($req->all(), [
             'store_id' => 'required',
-            'store_name' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
-            'in_date' => 'required',
-            'in_time' => 'required',
-            'in_lat' => 'required',
-            'in_long' => 'required',
-            'user_login' => 'required'
+            'store_name' => 'required'
         ]);
 
         if ($validator->fails()) {

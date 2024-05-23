@@ -25,4 +25,8 @@ class Visit extends Model
         'user_login',
         'note'
     ];
+
+    protected $casts = [
+        'user_login' => 'array'
+    ];
 }
