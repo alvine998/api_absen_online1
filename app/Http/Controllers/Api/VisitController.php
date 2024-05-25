@@ -33,9 +33,17 @@ class VisitController extends Controller
         if ($store_id) {
             $query->latest()->where('store_id', '=', $store_id);
         }
-        if ($user_id) {
-            $query->whereRaw("JSON_EXTRACT(user_login, '$.user_id') = ?", [$user_id]);
-        }
+        // if ($user_id) {
+        //  $string = $visit[5]["user_login"];
+        // $string = "{user_id:1, user_name:admin, user_type:admin}";
+        // $string = trim($string, "{}");
+        // $string = preg_replace('/(\w+):/', '"$1":', $string);
+        // $string = preg_replace('/:(\w+)/', ':"$1"', $string); // Already quoted values
+        // $string = preg_replace('/:([^"\d\.\-]+)/', ':"$1"', $string); // Values that need quotes
+        // $a = "{" . $string . "}";
+        // $b = json_decode($a, true);
+        // $query->whereRaw("JSON_EXTRACT(user_login, '$.user_id') = ?", [$user_id]);
+        // }
         if ($date_start && $date_end) {
             $dateStart = Carbon::parse($date_start);
             $dateEnd = Carbon::parse($date_end)->endOfDay();
