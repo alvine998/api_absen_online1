@@ -14,6 +14,7 @@
 <div class="mt-[50px] px-10">
     <h2 class="text-2xl font-bold">Absensi</h2>
     <div class="bg-white shadow w-full rounded-md p-4 mt-2">
+        <a href="{{url('/absent/export/excel')}}" target="_blank" class="p-2 w-auto bg-green-600 hover:bg-green-500 text-white rounded">Download</a>
         <div class="overflow-x-auto mt-5">
             <table class="w-full table-auto pb-2">
                 <thead>
