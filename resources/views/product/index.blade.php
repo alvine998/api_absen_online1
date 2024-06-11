@@ -38,13 +38,13 @@
                             {{$products->name}}
                         </td>
                         <td class="border px-4 py-2 border-black">
-                            {{$products->qty}}
+                            {{number_format($products->qty, 0)}}
                         </td>
                         <td class="border px-4 py-2 border-black">
-                            {{$products->min_price}}
+                            Rp {{number_format($products->min_price,0)}}
                         </td>
                         <td class="border px-4 py-2 border-black">
-                            {{$products->price}}
+                            Rp {{number_format($products->price, 0)}}
                         </td>
                         <td class="border px-4 py-2 border-black">
                             {{$products->note}}
