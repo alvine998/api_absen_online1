@@ -21,8 +21,8 @@
                     <tr>
                         <th class="border border-black bg-gray-300 px-4 py-2">Tanggal</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Nama Produk</th>
-                        <th class="border border-black bg-gray-300 px-4 py-2">Jumlah</th>
-                        <!-- <th class="border border-black bg-gray-300 px-4 py-2">Aksi</th> -->
+                        <th class="border border-black bg-gray-300 px-4 py-2">Jumlah Produk</th>
+                        <th class="border border-black bg-gray-300 px-4 py-2">Total Harga</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,10 +32,15 @@
                             {{$stocks->created_at}}
                         </td>
                         <td class="border px-4 py-2 border-black text-center">
-                            {{$stocks->product_name}}
+                            @foreach($stocks->products as $item)
+                            <p>{{ $item['name'] }} - {{ $item['qty'] }} - Rp {{ number_format($item['price'], 0) }}</p>
+                            @endforeach
                         </td>
                         <td class="border px-4 py-2 border-black text-center">
-                            {{$stocks->qty}}
+                            {{number_format($stocks->total_qty, 0)}}
+                        </td>
+                        <td class="border px-4 py-2 border-black text-center">
+                            Rp {{number_format($stocks->total_price, 0)}}
                         </td>
                         <!-- <td class="border px-4 py-2 border-black text-center flex gap-5 justify-center items-center">
                             <a href="{{route('stock.edit', $stocks)}}" class="text-green-700 hover:text-green-600 text-3xl"><i class="fas fa-pen-square"></i></a>

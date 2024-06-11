@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
-            $table->integer('product_id');
-            $table->string('product_name');
-            $table->double('product_price');
-            $table->float('qty');
+            $table->string('ref_no');
+            $table->json('products');
+            $table->double('total_price');
+            $table->float('total_qty');
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });

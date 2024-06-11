@@ -10,9 +10,18 @@ class Stock extends Model
     use HasFactory;
 
     protected $fillable = [
-        'product_id',
-        'product_name',
-        'product_price',
-        'qty'
+        'ref_no',
+        'products',
+        'total_price',
+        'total_qty'
     ];
+
+    protected $casts = [
+        'products' => 'array',
+    ];
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }
