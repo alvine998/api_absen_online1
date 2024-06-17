@@ -11,6 +11,12 @@ class Stock extends Model
 
     protected $fillable = [
         'ref_no',
+        'visit_id',
+        'user_id',
+        'user_name',
+        'store_id',
+        'store_name',
+        'store_code',
         'products',
         'total_price',
         'total_qty'

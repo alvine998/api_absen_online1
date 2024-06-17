@@ -17,6 +17,15 @@ class StockController extends Controller
         $search = $req->get('search');
 
         $query = Stock::query()->whereNull('deleted_at');
+        if ($req->get('user_id')) {
+            $query->latest()->where('user_id', $req->get('user_id'));
+        }
+        if ($req->get('visit_id')) {
+            $query->latest()->where('visit_id', $req->get('visit_id'));
+        }
+        if ($req->get('store_id')) {
+            $query->latest()->where('store_id', $req->get('store_id'));
+        }
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('ref_no', 'like', '%' . $search . '%');
@@ -53,6 +62,12 @@ class StockController extends Controller
         }
         $result = Stock::create([
             'products' => $request->products,
+            'visit_id' => $request->visit_id,
+            'user_id' => $request->user_id,
+            'user_name' => $request->user_name,
+            'store_id' => $request->store_id,
+            'store_name' => $request->store_name,
+            'store_code' => $request->store_code,
             'ref_no' => $request->ref_no,
             'total_price' => $request->total_price,
             'total_qty' => $request->total_qty
@@ -77,22 +92,23 @@ class StockController extends Controller
             return response()->json("Stok tidak ditemukan!", 404);
         }
 
-        $existProduct = Product::where('id', $stock->product_id)->first();
-        if (!$existProduct) {
-            return response()->json("Produk tidak ditemukan!", 404);
-        }
-
         $result = $stock->update([
-            'product_id' => $req->product_id,
-            'product_name' => $existProduct->name,
-            'product_price' => $existProduct->price,
-            'qty' => $req->qty
+            'visit_id' => $req->visit_id,
+            'user_id' => $req->user_id,
+            'user_name' => $req->user_name,
+            'store_id' => $req->store_id,
+            'store_name' => $req->store_name,
+            'store_code' => $req->store_code,
+            'products' => $req->products,
+            'ref_no' => $req->ref_no,
+            'total_price' => $req->total_price,
+            'total_qty' => $req->total_qty
         ]);
-        if ($result) {
-            $existProduct->qty = $existProduct->qty + ($req->qty - $stock->qty);
-            echo $existProduct->qty . "Masuk sini";
-            $existProduct->save();
-        }
+        // if ($result) {
+        //     $existProduct->qty = $existProduct->qty + ($req->qty - $stock->qty);
+        //     echo $existProduct->qty . "Masuk sini";
+        //     $existProduct->save();
+        // }
 
         return new GeneralResource(true, 'Data Stok Berhasil Diubah!', $stock);
     }
