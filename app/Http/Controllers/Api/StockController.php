@@ -73,9 +73,9 @@ class StockController extends Controller
             'total_qty' => $request->total_qty
         ]);
 
-        foreach($request->products as $item){
+        foreach ($request->products as $item) {
             $product = Product::find($item['id']);
-            if($product){
+            if ($product) {
                 $product->qty += $item['qty'];
                 $product->save();
             }
@@ -87,17 +87,17 @@ class StockController extends Controller
     // Update Data
     public function update(Request $req, Stock $stock)
     {
-        $validator = Validator::make($req->all(), [
-            'product_id' => 'required',
-            'qty' => 'required'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
 
         if ($stock->deleted_at) {
             return response()->json("Stok tidak ditemukan!", 404);
+        }
+
+        foreach ($stock->products as $item) {
+            $product = Product::find($item['id']);
+            if ($product) {
+                $product->qty -= $item['qty'];
+                $product->save();
+            }
         }
 
         $result = $stock->update([
@@ -112,6 +112,14 @@ class StockController extends Controller
             'total_price' => $req->total_price,
             'total_qty' => $req->total_qty
         ]);
+
+        foreach ($req->products as $item) {
+            $product = Product::find($item['id']);
+            if ($product) {
+                $product->qty += $item['qty'];
+                $product->save();
+            }
+        }
         // if ($result) {
         //     $existProduct->qty = $existProduct->qty + ($req->qty - $stock->qty);
         //     echo $existProduct->qty . "Masuk sini";
@@ -127,13 +135,14 @@ class StockController extends Controller
         if ($stock->deleted_at) {
             return response()->json("Stok tidak ditemukan!", 404);
         }
-        $existProduct = Product::where('id', $stock->product_id)->first();
-        if (!$existProduct) {
-            return response()->json("Produk tidak ditemukan!", 404);
+        foreach ($stock->products as $item) {
+            $product = Product::find($item['id']);
+            if ($product) {
+                $product->qty -= $item['qty'];
+                $product->save();
+            }
         }
-        $existProduct->qty = $existProduct->qty - $stock->qty;
         $stock->deleted_at = now();
-        $existProduct->save();
         $stock->save();
         return new GeneralResource(true, 'Data Stok Berhasil Dihapus!', null);
     }

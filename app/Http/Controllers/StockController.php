@@ -24,4 +24,12 @@ class StockController extends Controller
 
         return view('store.create', compact('product'));
     }
+
+    public function update(Request $req, Stock $stock)
+    {
+        $stock->update([
+            'ref_no' => $req->ref_no
+        ]);
+        return redirect()->route('stock.index')->with(['success' => 'Data Berhasil Disimpan!']);
+    }
 }
