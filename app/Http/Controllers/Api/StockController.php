@@ -74,9 +74,9 @@ class StockController extends Controller
         ]);
 
         foreach($request->products as $item){
-            $product = Product::find($item->product_id);
+            $product = Product::find($item['id']);
             if($product){
-                $product->qty += $item->qty;
+                $product->qty += $item['qty'];
                 $product->save();
             }
         }
