@@ -73,6 +73,14 @@ class StockController extends Controller
             'total_qty' => $request->total_qty
         ]);
 
+        foreach($request->products as $item){
+            $product = Product::find($item->product_id);
+            if($product){
+                $product->qty += $item->qty;
+                $product->save();
+            }
+        }
+
         return new GeneralResource(true, 'Data Stok Berhasil Ditambahkan', $result);
     }
 

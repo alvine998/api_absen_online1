@@ -20,6 +20,8 @@
                 <thead>
                     <tr>
                         <th class="border border-black bg-gray-300 px-4 py-2">Tanggal</th>
+                        <th class="border border-black bg-gray-300 px-4 py-2">Nama Sales</th>
+                        <th class="border border-black bg-gray-300 px-4 py-2">Nama Toko</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Nama Produk</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Jumlah Produk</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Total Harga</th>
@@ -30,6 +32,12 @@
                     <tr>
                         <td class="border px-4 py-2 border-black text-center">
                             {{$stocks->created_at}}
+                        </td>
+                        <td class="border px-4 py-2 border-black text-center">
+                            {{$stocks->user_name}}
+                        </td>
+                        <td class="border px-4 py-2 border-black text-center">
+                            {{$stocks->store_name ? $stocks->store_name : "-"}}
                         </td>
                         <td class="border px-4 py-2 border-black text-center">
                             @foreach($stocks->products as $item)
