@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('out_lat')->nullable();
             $table->string('out_long')->nullable();
             $table->json('user_login');
+            $table->integer('user_id');
             $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
         });

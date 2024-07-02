@@ -23,6 +23,7 @@ class Visit extends Model
         'out_lat',
         'out_long',
         'user_login',
+        'user_id',
         'note'
     ];
 
