@@ -71,7 +71,8 @@ class VisitController extends Controller
             'in_time' => 'required',
             'in_lat' => 'required',
             'in_long' => 'required',
-            'user_login' => 'required'
+            'user_login' => 'required',
+            'user_id' => 'required',
         ]);
         Store::where('id', $req->id)->whereNull('deleted_at')->first();
 
@@ -96,6 +97,7 @@ class VisitController extends Controller
             'out_lat' => $req->out_lat,
             'out_long' => $req->out_long,
             'user_login' => $req->user_login,
+            'user_id' => $req->user_id,
             'note' => $req->note
         ]);
 
@@ -137,6 +139,7 @@ class VisitController extends Controller
                 'out_lat' => $req->out_lat,
                 'out_long' => $req->out_long,
                 'user_login' => $req->user_login,
+                'user_id' => $req->user_id,
                 'note' => $req->note
             ]);
         } else {
@@ -151,6 +154,7 @@ class VisitController extends Controller
                 'out_lat' => $req->out_lat,
                 'out_long' => $req->out_long,
                 'user_login' => $req->user_login,
+                'user_id' => $req->user_id,
                 'note' => $req->note
             ]);
         }
