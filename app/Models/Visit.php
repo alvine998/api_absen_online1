@@ -30,4 +30,9 @@ class Visit extends Model
     protected $casts = [
         'user_login' => 'array'
     ];
+
+    public function stocks()
+    {
+        return $this->hasMany(Stock::class, 'visit_id', 'id');
+    }
 }

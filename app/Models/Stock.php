@@ -32,6 +32,11 @@ class Stock extends Model
         return $this->hasMany(Product::class);
     }
 
+    public function visits()
+    {
+        return $this->belongsTo(Visit::class, 'visit_id', 'id');
+    }
+
     public function generateSoCode()
     {
         $datePart = date('ymd');
