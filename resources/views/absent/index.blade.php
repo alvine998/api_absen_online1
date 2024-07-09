@@ -19,7 +19,7 @@
             <table class="w-full table-auto pb-2">
                 <thead>
                     <tr>
-                        <th class="border border-black bg-gray-300 px-4 py-2">Toko</th>
+                        <th class="border border-black bg-gray-300 px-4 py-2">Nama Toko</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Nama</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Waktu</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Latitude</th>
@@ -40,7 +40,7 @@
                         </td>
                         <td class="border px-4 py-2 border-black">
                             <p>
-                                {{$absents->date}} {{$absents->time}}
+                                Check In: {{$absents->date}} {{$absents->time}}
                             </p>
                         </td>
                         <td class="border px-4 py-2 border-black">

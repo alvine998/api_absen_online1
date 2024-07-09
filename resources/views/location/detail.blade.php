@@ -68,7 +68,7 @@
 <script>
     // Initialize the map
     var locations = @json($location);
-    var map = L.map('map').setView([locations.data[0].latt, locations.data[0].long], 13);
+    var map = L.map('map').setView([locations.data[0].latt, locations.data[0].long], 10);
 
     // Add OpenStreetMap tiles
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -77,9 +77,9 @@
     var waypoints = [];
 
     // Add a marker
-    locations.data.forEach(function(loc) {
-        L.marker([loc.latt, loc.long]).addTo(map)
-            .bindPopup(`${loc.latt}, ${loc.long}`)
+    locations.data.forEach(function(loc, index) {
+        var marker = L.marker([loc.latt, loc.long]).addTo(map);
+        marker.bindPopup(`Route ${index}`).openPopup();
         waypoints.push(L.latLng(loc.latt, loc.long));
     })
 

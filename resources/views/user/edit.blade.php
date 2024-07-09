@@ -3,7 +3,7 @@
 @section('content')
 <div class="flex justify-center items-center mt-[50px] px-10">
     <div class="bg-white shadow w-full rounded-md p-4">
-        <h2 class="font-semibold text-xl">Tambah Data Pengguna</h2>
+        <h2 class="font-semibold text-xl">Ubah Data Pengguna</h2>
         <form action="{{route('user.update', $user->id)}}" enctype="multipart/form-data" method="post">
             @csrf
             @method('PUT')

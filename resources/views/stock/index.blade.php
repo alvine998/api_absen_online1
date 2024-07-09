@@ -23,8 +23,9 @@
                         <th class="border border-black bg-gray-300 px-4 py-2">No Referensi</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Kode SO</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Nama Sales</th>
+                        <th class="border border-black bg-gray-300 px-4 py-2">Kode Toko</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Nama Toko</th>
-                        <th class="border border-black bg-gray-300 px-4 py-2">Nama Produk</th>
+                        <th class="border border-black bg-gray-300 px-4 py-2">Produk</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Jumlah Produk</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Total Harga</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Aksi</th>
@@ -46,12 +47,17 @@
                             {{$stocks->user_name}}
                         </td>
                         <td class="border px-4 py-2 border-black text-center">
+                            {{$stocks->store_code ? $stocks->store_code : "-"}}
+                        </td>
+                        <td class="border px-4 py-2 border-black text-center">
                             {{$stocks->store_name ? $stocks->store_name : "-"}}
                         </td>
                         <td class="border px-4 py-2 border-black text-center">
-                            @foreach($stocks->products as $item)
-                            <p>{{ $item['name'] }} - {{ $item['qty'] }} - Rp {{ number_format($item['price'], 0) }}</p>
-                            @endforeach
+                            <ul>
+                                @foreach($stocks->products as $item)
+                                <ol>{{ $item['code'] }} - {{ $item['name'] }} - {{ $item['qty'] }} - Rp {{ number_format($item['price'], 0) }}</ol>
+                                @endforeach
+                            </ul>
                         </td>
                         <td class="border px-4 py-2 border-black text-center">
                             {{number_format($stocks->total_qty, 0)}}

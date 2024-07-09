@@ -18,7 +18,9 @@
             <table class="w-full table-auto pb-2">
                 <thead>
                     <tr>
-                        <th class="border border-black bg-gray-300 px-4 py-2">Toko</th>
+                        <th class="border border-black bg-gray-300 px-4 py-2">Nama Sales</th>
+                        <th class="border border-black bg-gray-300 px-4 py-2">Kode Toko</th>
+                        <th class="border border-black bg-gray-300 px-4 py-2">Nama Toko</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Waktu</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Latitude</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Longitude</th>
@@ -30,18 +32,24 @@
                     @forelse ($visitor as $visitors)
                     <tr>
                         <td class="border px-4 py-2 border-black">
+                            {{$visitors->user_login["user_name"]}}
+                        </td>
+                        <td class="border px-4 py-2 border-black">
+                            {{$visitors->store_code}}
+                        </td>
+                        <td class="border px-4 py-2 border-black">
                             {{$visitors->store_name}} ({{$visitors->store_type}})
                         </td>
                         <td class="border px-4 py-2 border-black">
                             <p>
-                                Masuk: {{$visitors->in_date}} {{$visitors->in_time}}<br />
-                                Pulang: {{$visitors->out_date}} {{$visitors->out_time}}
+                                Check In: {{$visitors->in_date}} {{$visitors->in_time}}<br />
+                                Check Out: {{$visitors->out_date}} {{$visitors->out_time}}
                             </p>
                         </td>
                         <td class="border px-4 py-2 border-black">
                             <p>
-                                Masuk: {{$visitors->in_lat}}<br />
-                                Pulang: {{$visitors->out_lat}}
+                                Check In: {{$visitors->in_lat}}<br />
+                                Check Out: {{$visitors->out_lat}}
                             </p>
                         </td>
                         <td class="border px-4 py-2 border-black">
