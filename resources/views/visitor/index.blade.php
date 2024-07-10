@@ -32,7 +32,7 @@
                     @forelse ($visitor as $visitors)
                     <tr>
                         <td class="border px-4 py-2 border-black">
-                            {{$visitors->user_login["user_name"]}}
+                            {{json_decode(str_replace("'",'"',$visitors->user_login), true)["user_name"]}}
                         </td>
                         <td class="border px-4 py-2 border-black">
                             {{$visitors->store_code}}
