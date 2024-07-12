@@ -81,7 +81,7 @@
         var marker = L.marker([loc.latt, loc.long]).addTo(map);
         waypoints.push(L.latLng(loc.latt, loc.long));
         if(index === locations.data.length - 1){
-            marker.bindPopup(`Route ${index+1}`);
+            marker.bindPopup(`${loc.user_name}`);
             marker.openPopup();
         }
     })
