@@ -163,6 +163,7 @@ class UserController extends Controller
                 'notes' => $req->notes,
                 'type' => $req->type,
                 'role' => $req->role,
+                'logout_status' => $req->logout_status,
                 'created_by' => json_encode([
                     'user_name' => $req->user_name,
                     'user_type' => $req->user_type,

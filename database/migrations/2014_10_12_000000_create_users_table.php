@@ -23,6 +23,7 @@ return new class extends Migration
             $table->enum('type', ['admin', 'sales', 'spg']);
             $table->enum('role', ['supervisor'])->nullable();
             $table->string('photo')->nullable();
+            $table->integer('logout_status')->default(0);
             $table->json('created_by');
             $table->rememberToken();
             $table->timestamp('deleted_at')->nullable();

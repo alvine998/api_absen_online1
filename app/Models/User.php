@@ -25,7 +25,8 @@ class User extends Authenticatable
         'created_by',
         'type',
         'role',
-        'photo'
+        'photo',
+        'logout_status'
     ];
 
     /**

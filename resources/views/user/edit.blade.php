@@ -48,6 +48,7 @@
                         }
                     })
                 </script>
+
                 <div class="flex flex-col gap-1 mt-2">
                     <label for="password">Password</label>
                     <input id="password" name="password" value="{{old('password')}}" type="password" placeholder="Masukkan Password" class="w-full p-1 pl-2 rounded border border-gray-300" />
@@ -59,6 +60,52 @@
                 <div class="flex flex-col gap-1 mt-2">
                     <label for="notes">Keterangan</label>
                     <input id="notes" name="notes" value="{{old('notes', $user->notes)}}" placeholder="Masukkan Keterangan" class="w-full p-1 pl-2 rounded border border-gray-300" />
+                </div>
+                <div class="my-4">
+                    <label for="logout">Status Aplikasi</label>
+                    <button type="button" class="text-4xl flex items-center gap-4" onclick="changeToggle()">
+                        <i id="toggle" class="fas duration-200 transition-all"></i> <span id="labelToggle" class="text-lg">{{$user->logout_status == 1 ? "Logout" : "Login"}}</span>
+                    </button>
+                    <input type="hidden" id="logout_status" name="logout_status" value="{{old('logout_status', $user->logout_status)}}">
+                    <script>
+                        const toggleIcon = document.getElementById("toggle");
+                        const labelToggle = document.getElementById("labelToggle");
+                        const logout_status = document.getElementById("logout_status");
+
+                        const setInitialToggleState = () => {
+                            if (parseInt(logout_status.value) === 1) {
+                                toggleIcon.classList.add("fa-toggle-off", "text-gray-700");
+                                toggleText.textContent = "Logout";
+                            } else {
+                                toggleIcon.classList.add("fa-toggle-on", "text-green-700");
+                                toggleText.textContent = "Login";
+                            }
+                        }
+
+                        const changeToggle = () => {
+                            if (toggleIcon.classList.contains("text-green-700")) {
+                                toggleIcon.classList.remove("text-green-700");
+                                toggleIcon.classList.add("text-gray-700");
+                                labelToggle.textContent = "Logout";
+                                logout_status.value = 1;
+                            } else {
+                                toggleIcon.classList.remove("text-gray-700");
+                                toggleIcon.classList.add("text-green-700");
+                                labelToggle.textContent = "Login";
+                                logout_status.value = 0;
+                            }
+
+                            if (toggleIcon.classList.contains("fa-toggle-on")) {
+                                toggleIcon.classList.remove("fa-toggle-on");
+                                toggleIcon.classList.add("fa-toggle-off");
+                            } else {
+                                toggleIcon.classList.remove("fa-toggle-off");
+                                toggleIcon.classList.add("fa-toggle-on");
+                            }
+                        }
+
+                        window.onload = setInitialToggleState
+                    </script>
                 </div>
                 <input type="hidden" name="user_name" value="alvine">
                 <input type="hidden" name="user_type" value="admin">
