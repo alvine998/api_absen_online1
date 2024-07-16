@@ -16,7 +16,19 @@
                     <label for="name">Nama Toko</label>
                     <input id="name" name="name" type="text" value="{{old('name', $store->name)}}" required placeholder="Masukkan Nama Toko" class="w-full p-1 pl-2 rounded border border-gray-300" />
                 </div>
-                <div class="flex flex-col gap-1 mt-2">
+
+                <div id="radioRole" class="my-4">
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="role" id="role" value="spg" onchange="handleRadio(this)" {{$store->user_id !== 0 ? "checked" : ""}}>
+                        <span class="ml-2">SPG</span>
+                    </label>
+                    <label class="inline-flex items-center ml-6">
+                        <input type="radio" name="role" id="role" value="sales" onchange="handleRadio(this)" {{$store->user_id == 0 ? "checked" : ""}}>
+                        <span class="ml-2">Sales</span>
+                    </label>
+                </div>
+
+                <div id="radioSPV" class="flex flex-col gap-1 mt-2">
                     <label for="user_id">Supervisor</label>
                     <select name="user_id" class="w-full p-1 border border-gray-300" id="user_id">
                         <option value="">Pilih Supervisor</option>
@@ -25,6 +37,29 @@
                         @endforeach
                     </select>
                 </div>
+
+                <script>
+                    var store = @json($store);
+
+                    function handleFirst() {
+                        var radioSelect = document.getElementById('radioSPV');
+                        if (store.user_id == 0) {
+                            radioSelect.classList.add('hidden')
+                        }
+                    }
+
+                    function handleRadio(item) {
+                        var radioSelect = document.getElementById('radioSPV');
+                        var selected = item.value
+                        if (selected !== "spg") {
+                            radioSelect.classList.add('hidden')
+                        } else {
+                            radioSelect.classList.remove('hidden')
+                        }
+                    }
+
+                    window.onload = handleFirst();
+                </script>
                 <div class="flex flex-col gap-1 mt-2">
                     <label for="note1">Keterangan</label>
                     <textarea id="note1" name="note1" value="{{old('note1', $store->note1)}}" type="text" placeholder="Masukkan Keterangan" class="w-full p-1 pl-2 rounded border border-gray-300"></textarea>
