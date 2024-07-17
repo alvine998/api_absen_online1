@@ -58,8 +58,11 @@
                                 Pulang: {{$visitors->out_long}}
                             </p>
                         </td>
-                        <td class="border px-4 py-2 border-black flex items-center justify-center">
-                            <img src="{{Storage::url('storage/').$visitors->image}}" alt="img-absent" class="w-[150px] h-[150px]">
+                        <td class="border px-4 py-2 border-black justify-center h-full">
+                            @foreach (json_decode($visitors->image) as $item)
+                            <a href="{{Storage::url('storage/').$item}}" target="_blank" class="block w-full h-full p-2 text-blue-700">Lihat</a>
+                            @endforeach
+                            <!-- <img src="{{Storage::url('storage/').$visitors->image}}" alt="img-absent" class="w-[150px] h-[150px]"> -->
                         </td>
                         <td class="border px-4 py-2 border-black">
                             {{$visitors->note}}

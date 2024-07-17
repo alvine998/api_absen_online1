@@ -66,7 +66,8 @@ class VisitController extends Controller
             'store_id' => 'required',
             'store_name' => 'required',
             'store_code' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+            'image' => 'required',
+            'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
             'in_date' => 'required',
             'in_time' => 'required',
             'in_lat' => 'required',
@@ -80,14 +81,24 @@ class VisitController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $image = $req->file('image');
-        $image->storeAs('public/storage', $image->hashName());
+        $uploadedImages = [];
+
+        $images = $req->file('image');
+        if($req->hasFile('image'))
+        {
+            foreach ($images as $image)
+            {
+                $uniqueName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+                $image->storeAs('public/storage', $uniqueName);
+                $uploadedImages[] = $uniqueName;
+            }
+        }
 
         $result = Visit::create([
             'store_id' => $req->store_id,
             'store_name' => $req->store_name,
             'store_code' => $req->store_code,
-            'image' => $image->hashName(),
+            'image' => json_encode($uploadedImages),
             'in_date' => $req->in_date,
             'in_time' => $req->in_time,
             'in_lat' => $req->in_lat,

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('store_name');
             $table->string('store_code');
             $table->string('note')->nullable();
-            $table->string('image');
+            $table->text('image');
             $table->date('in_date')->nullable();
             $table->time('in_time')->nullable();
             $table->string('in_lat')->nullable();
