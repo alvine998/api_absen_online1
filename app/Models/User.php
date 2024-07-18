@@ -26,6 +26,7 @@ class User extends Authenticatable
         'type',
         'role',
         'photo',
+        'total_image',
         'logout_status'
     ];
 

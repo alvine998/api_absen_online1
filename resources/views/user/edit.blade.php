@@ -36,15 +36,32 @@
                     </label>
                 </div>
 
+                <div id="selectMax" class="hidden mt-2">
+                    <label for="selectMax">Maks. Upload Foto</label>
+                    <select name="total_image" class="w-full p-1 border border-gray-300" id="total_image">
+                        <option value="1" {{old('total_image', $user->total_image) == '1' ? 'selected' : ''}}>1</option>
+                        <option value="2" {{old('total_image', $user->total_image) == '2' ? 'selected' : ''}}>2</option>
+                        <option value="3" {{old('total_image', $user->total_image) == '3' ? 'selected' : ''}}>3</option>
+                        <option value="4" {{old('total_image', $user->total_image) == '4' ? 'selected' : ''}}>4</option>
+                        <option value="5" {{old('total_image', $user->total_image) == '5' ? 'selected' : ''}}>5</option>
+                    </select>
+                </div>
+
                 <script>
                     document.getElementById('type').addEventListener('change', function() {
                         var selected = this.value;
                         var radioSelect = document.getElementById('radioRole');
+                        var selectMax = document.getElementById('selectMax');
 
                         if (selected !== "spg") {
                             radioSelect.classList.add('hidden')
                         } else {
                             radioSelect.classList.remove('hidden')
+                        }
+                        if (selected !== "sales") {
+                            selectMax.classList.add('hidden')
+                        } else {
+                            selectMax.classList.remove('hidden')
                         }
                     })
                 </script>
@@ -67,12 +84,20 @@
                         <i id="toggle" class="fas duration-200 transition-all"></i> <span id="labelToggle" class="text-lg">{{$user->logout_status == 1 ? "Logout" : "Login"}}</span>
                     </button>
                     <input type="hidden" id="logout_status" name="logout_status" value="{{old('logout_status', $user->logout_status)}}">
+                    <input type="hidden" id="types" name="types" value="{{old('type', $user->type)}}">
                     <script>
                         const toggleIcon = document.getElementById("toggle");
                         const labelToggle = document.getElementById("labelToggle");
                         const logout_status = document.getElementById("logout_status");
+                        const types = document.getElementById("types");
+                        const selectMax = document.getElementById('selectMax');
 
                         const setInitialToggleState = () => {
+                            if (types.value !== "sales") {
+                                selectMax.classList.add('hidden')
+                            } else {
+                                selectMax.classList.remove('hidden')
+                            }
                             if (parseInt(logout_status.value) === 1) {
                                 toggleIcon.classList.add("fa-toggle-off", "text-gray-700");
                                 toggleText.textContent = "Logout";
@@ -80,6 +105,7 @@
                                 toggleIcon.classList.add("fa-toggle-on", "text-green-700");
                                 toggleText.textContent = "Login";
                             }
+
                         }
 
                         const changeToggle = () => {

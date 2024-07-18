@@ -46,6 +46,7 @@ class UserController extends Controller
                 'type' => $req->type,
                 'password' => $hashPassword,
                 'role' => $req->role,
+                'total_image' => $req->total_image,
                 'photo' => $photo->hashName(),
                 'created_by' => json_encode([
                     'user_name' => $req->user_name,
@@ -61,6 +62,7 @@ class UserController extends Controller
                 'type' => $req->type,
                 'password' => $hashPassword,
                 'role' => $req->role,
+                'total_image' => $req->total_image,
                 'created_by' => json_encode([
                     'user_name' => $req->user_name,
                     'user_type' => $req->user_type,
@@ -98,6 +100,7 @@ class UserController extends Controller
                 'type' => $req->type,
                 'password' => $hashPassword,
                 'role' => $req->role,
+                'total_image' => $req->total_image,
                 'created_by' => json_encode([
                     'user_name' => $req->user_name,
                     'user_type' => $req->user_type,
@@ -114,6 +117,7 @@ class UserController extends Controller
                 'notes' => $req->notes,
                 'type' => $req->type,
                 'role' => $req->role,
+                'total_image' => $req->total_image,
                 'photo' => $photo->hashName(),
                 'created_by' => json_encode([
                     'user_name' => $req->user_name,
@@ -128,6 +132,7 @@ class UserController extends Controller
                 'notes' => $req->notes,
                 'type' => $req->type,
                 'role' => $req->role,
+                'total_image' => $req->total_image,
                 'logout_status' => $req->logout_status,
                 'created_by' => json_encode([
                     'user_name' => $req->user_name,

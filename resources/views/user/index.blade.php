@@ -24,6 +24,7 @@
                         <th class="border border-black bg-gray-300 px-4 py-2">Peran</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Keterangan</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Foto</th>
+                        <th class="border border-black bg-gray-300 px-4 py-2">Maks. Upload Foto</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Status di Aplikasi</th>
                         <th class="border border-black bg-gray-300 px-4 py-2">Aksi</th>
                     </tr>
@@ -44,18 +45,23 @@
                             {{$users->notes ? $users->notes : '-'}}
                         </td>
                         <td class="border px-4 py-2 border-black">
-                            <img src="{{Storage::url('storage/').$users->photo}}" alt="img-user" class="w-[150px] h-[150px]">
+                            <img src="{{Storage::url('storage/').$users->photo}}" alt="img-user" class="w-[100px] h-[100px]">
+                        </td>
+                        <td class="border px-4 py-2 border-black text-center">
+                            {{$users->total_image}}
                         </td>
                         <td class="border px-4 py-2 border-black">
                             {{$users->logout_status == 0 ? 'Login' : 'Logout'}}
                         </td>
                         <td class="border px-4 py-2 border-black text-center">
-                            <a href="{{route('user.edit', $users)}}" class="text-green-700 hover:text-green-600 text-3xl"><i class="fas fa-pen-square"></i></a>
-                            <form onsubmit="return confirm('Apakah anda yakin ingin menghapus data ini?')" action="{{route('user.destroy', $users->id)}}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-700 hover:text-red-700 text-3xl"><i class="fas fa-trash"></i></button>
-                            </form>
+                            <div class=" flex gap-2">
+                                <a href="{{route('user.edit', $users)}}" class="text-green-700 hover:text-green-600 text-3xl"><i class="fas fa-pen-square"></i></a>
+                                <form onsubmit="return confirm('Apakah anda yakin ingin menghapus data ini?')" action="{{route('user.destroy', $users->id)}}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-red-700 hover:text-red-700 text-3xl"><i class="fas fa-trash"></i></button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                     @empty

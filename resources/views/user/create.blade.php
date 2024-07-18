@@ -35,15 +35,32 @@
                     </label>
                 </div>
 
+                <div id="selectMax" class="hidden mt-2">
+                    <label for="selectMax">Maks. Upload Foto</label>
+                    <select name="total_image" class="w-full p-1 border border-gray-300" id="total_image">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+
                 <script>
                     document.getElementById('type').addEventListener('change', function() {
                         var selected = this.value;
                         var radioSelect = document.getElementById('radioRole');
-
+                        var selectMax = document.getElementById('selectMax');
                         if (selected !== "spg") {
                             radioSelect.classList.add('hidden')
                         } else {
                             radioSelect.classList.remove('hidden')
+                        }
+
+                        if (selected !== "sales") {
+                            selectMax.classList.add('hidden')
+                        } else {
+                            selectMax.classList.remove('hidden')
                         }
                     })
                 </script>

@@ -24,6 +24,7 @@ return new class extends Migration
             $table->enum('role', ['supervisor'])->nullable();
             $table->string('photo')->nullable();
             $table->integer('logout_status')->default(0);
+            $table->integer('total_image')->default(1);
             $table->json('created_by');
             $table->rememberToken();
             $table->timestamp('deleted_at')->nullable();
