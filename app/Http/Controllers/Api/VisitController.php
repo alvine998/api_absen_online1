@@ -67,7 +67,7 @@ class VisitController extends Controller
             'store_name' => 'required',
             'store_code' => 'required',
             'image' => 'required',
-            'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+            'image.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:5120',
             'in_date' => 'required',
             'in_time' => 'required',
             'in_lat' => 'required',
