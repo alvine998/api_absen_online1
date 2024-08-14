@@ -65,7 +65,7 @@ class StoreController extends Controller
         ]);
 
         $store->update([
-            'user_id' => $req->user_id || 0,
+            'user_id' => $req->user_id ? (int)$req->user_id : 0,
             'code' => $req->code,
             'name' => $req->name,
             'note1' => $req->note1,
