@@ -14,8 +14,9 @@ class StoreController extends Controller
     public function index()
     {
         $store = Store::latest()->whereNull('deleted_at')->paginate(5);
+        $spv = User::latest()->where([['deleted_at', '=', null], ['type', '=', 'spg'], ['role', '=', 'supervisor']])->paginate(999);
         if (Auth::check()) {
-            return view('store.index', compact('store'));
+            return view('store.index', compact(['store', 'spv']));
         }
         return redirect("/")->withSuccess('Opps! You do not have access');
     }
@@ -38,8 +39,9 @@ class StoreController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
+
         Store::create([
-            'user_id' => $req->user_id || 0,
+            'user_id' => $req->user_id ? (int)$req->user_id : 0,
             'code' => $req->code,
             'name' => $req->name,
             'note1' => $req->note1,
