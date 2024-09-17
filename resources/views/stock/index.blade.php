@@ -55,7 +55,7 @@
                         <td class="border px-4 py-2 border-black text-center">
                             <ul>
                                 @foreach($stocks->products as $item)
-                                <ol>{{ $item['so_code'] }} - {{ $item['name'] }} - {{ $item['qty'] }} - Rp {{ number_format($item['price'], 0) }}</ol>
+                                <ol>{{ $item['code'] ? $item['code'] : "" }} - {{ $item['name'] }} - {{ $item['qty'] }} - Rp {{ number_format($item['price'], 0) }}</ol>
                                 @endforeach
                             </ul>
                         </td>
