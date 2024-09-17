@@ -18,14 +18,14 @@ class StockController extends Controller
 
         $query = Stock::query();
         if ($req->get('user_id')) {
-            $query->join('visits', 'stocks.user_id', '=', 'visits.user_id')->select('visits.*', 'stocks.so_code')->latest()->where([['visits.user_id', '=', $req->get('user_id')], ['visits.deleted_at', '=', null]]);
+            $query->join('visits as v1', 'stocks.user_id', '=', 'v1.user_id')->select('v1.*', 'stocks.so_code')->latest()->where([['v1.user_id', '=', $req->get('user_id')], ['v1.deleted_at', '=', null]]);
             // $query->latest()->where('user_id', $req->get('user_id'));
         }
         if ($req->get('visit_id')) {
-            $query->join('visits', 'stocks.visit_id', '=', 'visits.id')->select('visits.*', 'stocks.so_code')->latest()->where([['visits.id', '=', $req->get('visit_id')], ['visits.deleted_at', '=', null]]);
+            $query->join('visits as v2', 'stocks.visit_id', '=', 'v2.id')->select('v2.*', 'stocks.so_code')->latest()->where([['v2.id', '=', $req->get('visit_id')], ['v2.deleted_at', '=', null]]);
         }
         if ($req->get('store_id')) {
-            $query->join('visits', 'stocks.store_id', '=', 'visits.store_id')->select('visits.*', 'stocks.so_code')->latest()->where([['visits.store_id', '=', $req->get('store_id')], ['visits.deleted_at', '=', null]]);
+            $query->join('visits as v3', 'stocks.store_id', '=', 'v3.store_id')->select('v3.*', 'stocks.so_code')->latest()->where([['v3.store_id', '=', $req->get('store_id')], ['v3.deleted_at', '=', null]]);
         }
         if ($search) {
             $query->where(function ($q) use ($search) {
