@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('store_id')->nullable();
             $table->string('store_name');
             $table->string('store_code');
+            $table->string('so_code')->nullable();
             $table->string('note')->nullable();
             $table->text('image');
             $table->date('in_date')->nullable();

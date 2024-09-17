@@ -13,6 +13,7 @@ class Visit extends Model
         'store_id',
         'store_name',
         'store_code',
+        'so_code',
         'image',
         'in_date',
         'in_time',
