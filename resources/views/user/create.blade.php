@@ -82,6 +82,12 @@
                 <input type="hidden" name="user_id" value="{{Session::get('user')->id}}">
             </div>
 
+            @if(session('error'))
+            <div class="bg-red-200 w-full p-2 mt-2">
+                <p class="text-red-500">{{session('error')}}</p>
+            </div>
+            @endif
+
             <div class="mt-5 flex justify-between items-center gap-2">
                 <a href="/user" class="w-full p-1 rounded text-center bg-red-500 text-white hover:bg-red-600 duration-200">Batal</a>
                 <button type="submit" class="w-full p-1 rounded bg-blue-500 text-white hover:bg-blue-600 duration-200">Simpan</button>

@@ -36,6 +36,12 @@ class UserController extends Controller
         ]);
         $hashPassword = Hash::make($req->password);
 
+        $existNIK = User::where('nik', $req->nik)->first();
+
+        if($existNIK){
+            return redirect()->route('user.create')->with('error', 'NIK telah terdaftar!');   
+        }
+
         if ($req->file('photo')) {
             $photo = $req->file('photo');
             $photo->storeAs('public/storage', $photo->hashName());
