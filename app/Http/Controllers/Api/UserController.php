@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\Store;
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -43,10 +45,15 @@ class UserController extends Controller
     // Get Single Data
     public function show(User $user)
     {
-        if ($user->deleted_at) {
-            return response()->json("Pengguna tidak ditemukan!", 404);
+        try {
+            if ($user->deleted_at || !$user) {
+                return new UserResource(false, 'Data Tidak Ditemukan', null, null);
+            }
+
+            return new UserResource(true, 'Data Ditemukan', $user, null);
+        } catch (\Exception $e) {
+            return new UserResource(false, 'Data Tidak Ditemukan', null, null);
         }
-        return new UserResource(true, 'Data Ditemukan', $user, null);
     }
 
     // Post Data

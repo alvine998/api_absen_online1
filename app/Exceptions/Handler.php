@@ -2,6 +2,8 @@
 
 namespace App\Exceptions;
 
+use App\Http\Resources\UserResource;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 
@@ -46,5 +48,14 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof ModelNotFoundException) {
+            return new UserResource(false, 'Data Tidak Ditemukan', null, null);
+        }
+
+        return parent::render($request, $exception);
     }
 }
