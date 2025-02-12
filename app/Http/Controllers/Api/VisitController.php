@@ -116,6 +116,40 @@ class VisitController extends Controller
         return new GeneralResource(true, 'Data Pengunjung Berhasil Ditambahkan', $result);
     }
 
+    // Post Order Only
+    public function store_order_only(Request $req)
+    {
+        $validator = Validator::make($req->all(), [
+            'store_id' => 'required',
+            'store_name' => 'required',
+            'store_code' => 'required',
+            'user_login' => 'required',
+            'user_id' => 'required',
+        ]);
+        Store::where('id', $req->id)->whereNull('deleted_at')->first();
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $result = Visit::create([
+            'store_id' => $req->store_id,
+            'store_name' => $req->store_name,
+            'store_code' => $req->store_code,
+            'so_code' => 'order_only',
+            'image' => 'order_only',
+            'in_date' => now(),
+            'in_time' => '00:00',
+            'in_lat' => 'order_only',
+            'in_long' => 'order_only',
+            'user_login' => $req->user_login,
+            'user_id' => $req->user_id,
+            'note' => $req->note
+        ]);
+
+        return new GeneralResource(true, 'Data Order Only Berhasil Ditambahkan', $result);
+    }
+
     // Update Data
     public function update(Request $req, Visit $visit)
     {

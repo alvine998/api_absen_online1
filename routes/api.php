@@ -35,6 +35,7 @@ Route::post('/users/login', [UserController::class, 'login'])->name('users.login
 Route::apiResource('/products', ProductController::class);
 Route::apiResource('/absents', AbsentController::class);
 Route::apiResource('/visits', VisitController::class);
+Route::post('/visits/orderonly', [VisitController::class, 'store_order_only'])->name('visits.store_order_only');
 Route::apiResource('/memberspvs', MemberSpvController::class);
 Route::apiResource('/locations', LocationController::class);
 Route::apiResource('/intervals', IntervalController::class);
