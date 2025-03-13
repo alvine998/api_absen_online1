@@ -12,22 +12,39 @@ class MemberSalesController extends Controller
     // Get Data
     public function index(Request $req)
     {
-        $limit = $req->get('limit');
+        $limit = $req->get('limit', 5); // Default limit to 5
         $store_id = $req->get('store_id');
         $user_id = $req->get('user_id');
+        $search = $req->get('search');
 
-        if ($store_id && $limit) {
-            $membersales = MemberSales::latest()->whereNull('deleted_at')->where('store_id', '=', $store_id)->paginate($limit);
-        } else if ($user_id) {
-            $membersales = MemberSales::latest()->whereNull('deleted_at')->where('user_id', '=', $user_id)->paginate(999);
-        } else if ($limit) {
-            $membersales = MemberSales::latest()->whereNull('deleted_at')->paginate($limit);
-        } else {
-            $membersales = MemberSales::latest()->whereNull('deleted_at')->paginate(5);
+        // Start query builder
+        $query = MemberSales::query()->whereNull('deleted_at');
+
+        // Apply search filter
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('store_name', 'like', '%' . $search . '%')
+                    ->orWhere('store_code', 'like', '%' . $search . '%')
+                    ->orWhere('user_name', 'like', '%' . $search . '%');
+            });
         }
+
+        // Apply store_id filter
+        if ($store_id) {
+            $query->where('store_id', $store_id);
+        }
+
+        // Apply user_id filter
+        if ($user_id) {
+            $query->where('user_id', $user_id);
+        }
+
+        // Get paginated results
+        $membersales = $query->latest()->paginate($limit);
 
         return new GeneralResource(true, 'List Data Member Supervisor', $membersales);
     }
+
 
     // Get Single Data
     public function show(MemberSales $membersales)
