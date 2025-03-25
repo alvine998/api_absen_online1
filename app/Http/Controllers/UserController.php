@@ -44,7 +44,7 @@ class UserController extends Controller
 
         if ($req->file('photo')) {
             $photo = $req->file('photo');
-            $photo->storeAs('public/storage', $photo->hashName());
+            $photo->storeAs('public/photos', $photo->hashName());
             User::create([
                 'name' => $req->name,
                 'nik' => $req->nik,
