@@ -46,6 +46,7 @@ class UserController extends Controller
             $photo = $req->file('photo');
             $photo->storeAs('public/photos', $photo->hashName());
             User::create([
+                'user_id' => $req->user_id, // Pastikan ini ditambahkan
                 'name' => $req->name,
                 'nik' => $req->nik,
                 'notes' => $req->notes,
@@ -62,6 +63,7 @@ class UserController extends Controller
             ]);
         } else {
             User::create([
+                'user_id' => $req->user_id, // Pastikan ini ditambahkan
                 'name' => $req->name,
                 'nik' => $req->nik,
                 'notes' => $req->notes,
