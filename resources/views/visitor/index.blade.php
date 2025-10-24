@@ -59,9 +59,17 @@
                             </p>
                         </td>
                         <td class="border px-4 py-2 border-black justify-center h-full">
-                            @foreach (json_decode($visitors->image) as $item)
-                            <a href="{{Storage::url('storage/').$item}}" target="_blank" class="block w-full h-full p-2 text-blue-700">Lihat</a>
-                            @endforeach
+                            @php
+                                $images = json_decode($visitors->image, true);
+                            @endphp
+                            
+                            @if(is_array($images))
+                                @foreach ($images as $item)
+                                    <a href="{{ Storage::url($item) }}" target="_blank" class="block">{{ $item }}</a>
+                                @endforeach
+                            @else
+                                <p>No images available</p>
+                            @endif
                             <!-- <img src="{{Storage::url('storage/').$visitors->image}}" alt="img-absent" class="w-[150px] h-[150px]"> -->
                         </td>
                         <td class="border px-4 py-2 border-black">
